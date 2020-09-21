@@ -3,7 +3,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+
+//importando rutas
 var usuarioRoutes = require('./routes/users');
+var loginRoutes = require('./routes/login');
+var subjectsRoutes = require('./routes/subjects');
+var classRoomRoutes = require('./routes/classroom');
 
 var app = express();
 
@@ -38,5 +43,9 @@ app.listen(3000, () => {
 
 //rutas
 app.use("/usuario", usuarioRoutes);
+app.use("/login", loginRoutes);
+app.use("/materia", subjectsRoutes);
+app.use("/aula", classRoomRoutes);
+
 
 module.exports = app;
