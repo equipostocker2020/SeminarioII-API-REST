@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 21-09-2020 a las 22:07:34
--- Versión del servidor: 10.4.11-MariaDB
--- Versión de PHP: 7.4.6
+-- Tiempo de generación: 24-09-2020 a las 01:23:08
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.2.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,7 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `AULA` (
   `ID_AULA` int(11) NOT NULL,
-  `NOMBRE_AULA` varchar(50) NOT NULL
+  `NOMBRE` varchar(50) NOT NULL,
+  `ID_MATERIA` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -43,7 +44,21 @@ CREATE TABLE `EVALUACION` (
   `FECHA` date NOT NULL,
   `FINAL` tinyint(1) NOT NULL,
   `ID_MATERIA` int(11) NOT NULL,
+  `ID_USUARIO` int(11) NOT NULL,
   `ID_AULA` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `EVALUACION_MATERIA_AULA`
+--
+
+CREATE TABLE `EVALUACION_MATERIA_AULA` (
+  `ID_EVALUACION` int(11) NOT NULL,
+  `ID_MATERIA` int(11) NOT NULL,
+  `ID_AULA` int(11) NOT NULL,
+  `ID_USUARIO` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -54,19 +69,24 @@ CREATE TABLE `EVALUACION` (
 
 CREATE TABLE `MATERIA` (
   `ID_MATERIA` int(11) NOT NULL,
-  `NOMBRE_MATERIA` varchar(50) NOT NULL,
+  `ID_USUARIO` int(11) NOT NULL,
+  `NOMBRE` varchar(50) NOT NULL,
+  `NOTA` int(2) NOT NULL,
   `DIA` varchar(10) NOT NULL,
   `HORARIO` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `MATERIA`
+-- Estructura de tabla para la tabla `MATERIAS_AULA`
 --
 
-INSERT INTO `MATERIA` (`ID_MATERIA`, `NOMBRE_MATERIA`, `DIA`, `HORARIO`) VALUES
-(1, 'seminario', 'lunes', '18.30-21.30'),
-(2, 'seminario', 'jueves', '18.30-21.30'),
-(3, 'trigila', 'lunes', '18:30 - 21:00');
+CREATE TABLE `MATERIAS_AULA` (
+  `ID_MATERIA` int(11) NOT NULL,
+  `ID_AULA` int(11) NOT NULL,
+  `AÑO` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -93,8 +113,19 @@ CREATE TABLE `USUARIO` (
 --
 
 INSERT INTO `USUARIO` (`ID_USUARIO`, `NOMBRE`, `APELLIDO`, `DIRECCION`, `EMAIL`, `DNI`, `CONTRASEÑA`, `CUIT_CUIL`, `ROL`, `FECHA_NAC`, `EDAD`) VALUES
-(17, 'marcelo fabian', 'Gutierrez capo', 'rems3029', 'marcelo2@mail.com', '337106461', '123456', '20337106464', 'estudiante', '1988-03-29', '32'),
-(19, 'marcelo', 'Gutierrez', 'rems3029', 'marcelo3@mail.com', '33710646', '$2a$10$HYk/.UWoG2O29zG52.xE9.VoXjenFqJlu6Vuhn6P3QOd1ionsUP3C', '2033710646', 'estudiante', '1988-03-29', '32');
+(10, 'marcelo', 'Gutierrez', 'rems3029', 'marcelo@mail.com', '33710646', '123456', '2033710646', 'estudiante', '1988-03-29', '32');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `USUARIO_MATERIA_AULA`
+--
+
+CREATE TABLE `USUARIO_MATERIA_AULA` (
+  `ID_USUARIO` int(11) NOT NULL,
+  `ID_MATERIA` int(11) NOT NULL,
+  `ID_AULA` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Índices para tablas volcadas
@@ -104,7 +135,8 @@ INSERT INTO `USUARIO` (`ID_USUARIO`, `NOMBRE`, `APELLIDO`, `DIRECCION`, `EMAIL`,
 -- Indices de la tabla `AULA`
 --
 ALTER TABLE `AULA`
-  ADD PRIMARY KEY (`ID_AULA`);
+  ADD PRIMARY KEY (`ID_AULA`),
+  ADD UNIQUE KEY `Id_materia` (`ID_MATERIA`);
 
 --
 -- Indices de la tabla `EVALUACION`
@@ -112,13 +144,27 @@ ALTER TABLE `AULA`
 ALTER TABLE `EVALUACION`
   ADD PRIMARY KEY (`ID_EVALUACION`),
   ADD UNIQUE KEY `Id_materia` (`ID_MATERIA`),
+  ADD KEY `Id_usuario` (`ID_USUARIO`),
   ADD KEY `Id_aula` (`ID_AULA`);
+
+--
+-- Indices de la tabla `EVALUACION_MATERIA_AULA`
+--
+ALTER TABLE `EVALUACION_MATERIA_AULA`
+  ADD PRIMARY KEY (`ID_EVALUACION`,`ID_MATERIA`,`ID_AULA`,`ID_USUARIO`);
 
 --
 -- Indices de la tabla `MATERIA`
 --
 ALTER TABLE `MATERIA`
-  ADD PRIMARY KEY (`ID_MATERIA`);
+  ADD PRIMARY KEY (`ID_MATERIA`),
+  ADD UNIQUE KEY `id_usuario` (`ID_USUARIO`);
+
+--
+-- Indices de la tabla `MATERIAS_AULA`
+--
+ALTER TABLE `MATERIAS_AULA`
+  ADD PRIMARY KEY (`ID_MATERIA`,`ID_AULA`);
 
 --
 -- Indices de la tabla `USUARIO`
@@ -130,6 +176,12 @@ ALTER TABLE `USUARIO`
   ADD UNIQUE KEY `Cuit_cuil` (`CUIT_CUIL`);
 
 --
+-- Indices de la tabla `USUARIO_MATERIA_AULA`
+--
+ALTER TABLE `USUARIO_MATERIA_AULA`
+  ADD PRIMARY KEY (`ID_USUARIO`,`ID_MATERIA`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -137,7 +189,7 @@ ALTER TABLE `USUARIO`
 -- AUTO_INCREMENT de la tabla `AULA`
 --
 ALTER TABLE `AULA`
-  MODIFY `ID_AULA` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID_AULA` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `EVALUACION`
@@ -149,13 +201,13 @@ ALTER TABLE `EVALUACION`
 -- AUTO_INCREMENT de la tabla `MATERIA`
 --
 ALTER TABLE `MATERIA`
-  MODIFY `ID_MATERIA` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID_MATERIA` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `USUARIO`
 --
 ALTER TABLE `USUARIO`
-  MODIFY `ID_USUARIO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `ID_USUARIO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
