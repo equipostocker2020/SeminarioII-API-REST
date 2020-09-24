@@ -25,7 +25,7 @@ router.post("/", (req, res) => {
         if (rows == 0) {
             res.status(400).json({
                 ok: false,
-                message: 'El mail ingresado no se encuentra registrado en la BD: ' + body.email
+                message: 'Credenciales invalidas - email'
             });
         }
         if (rows.length) {
@@ -33,7 +33,7 @@ router.post("/", (req, res) => {
                 if (!bcrypt.compareSync(body.contraseña, row.CONTRASEÑA)) {
                     return res.status(400).json({
                         ok: false,
-                        mensaje: 'Credenciales invalidas - password',
+                        message: 'Credenciales invalidas - password',
                     });
                 } else {
                     var token = jwt.sign({ usuario: rows }, SEED, { expiresIn: 14400 });
