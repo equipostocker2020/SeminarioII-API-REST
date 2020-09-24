@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 21-09-2020 a las 14:18:38
+-- Tiempo de generación: 24-09-2020 a las 01:23:08
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.33
 
@@ -51,6 +51,19 @@ CREATE TABLE `EVALUACION` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `EVALUACION_MATERIA_AULA`
+--
+
+CREATE TABLE `EVALUACION_MATERIA_AULA` (
+  `ID_EVALUACION` int(11) NOT NULL,
+  `ID_MATERIA` int(11) NOT NULL,
+  `ID_AULA` int(11) NOT NULL,
+  `ID_USUARIO` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `MATERIA`
 --
 
@@ -61,6 +74,18 @@ CREATE TABLE `MATERIA` (
   `NOTA` int(2) NOT NULL,
   `DIA` varchar(10) NOT NULL,
   `HORARIO` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `MATERIAS_AULA`
+--
+
+CREATE TABLE `MATERIAS_AULA` (
+  `ID_MATERIA` int(11) NOT NULL,
+  `ID_AULA` int(11) NOT NULL,
+  `AÑO` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -90,6 +115,18 @@ CREATE TABLE `USUARIO` (
 INSERT INTO `USUARIO` (`ID_USUARIO`, `NOMBRE`, `APELLIDO`, `DIRECCION`, `EMAIL`, `DNI`, `CONTRASEÑA`, `CUIT_CUIL`, `ROL`, `FECHA_NAC`, `EDAD`) VALUES
 (10, 'marcelo', 'Gutierrez', 'rems3029', 'marcelo@mail.com', '33710646', '123456', '2033710646', 'estudiante', '1988-03-29', '32');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `USUARIO_MATERIA_AULA`
+--
+
+CREATE TABLE `USUARIO_MATERIA_AULA` (
+  `ID_USUARIO` int(11) NOT NULL,
+  `ID_MATERIA` int(11) NOT NULL,
+  `ID_AULA` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Índices para tablas volcadas
 --
@@ -111,11 +148,23 @@ ALTER TABLE `EVALUACION`
   ADD KEY `Id_aula` (`ID_AULA`);
 
 --
+-- Indices de la tabla `EVALUACION_MATERIA_AULA`
+--
+ALTER TABLE `EVALUACION_MATERIA_AULA`
+  ADD PRIMARY KEY (`ID_EVALUACION`,`ID_MATERIA`,`ID_AULA`,`ID_USUARIO`);
+
+--
 -- Indices de la tabla `MATERIA`
 --
 ALTER TABLE `MATERIA`
   ADD PRIMARY KEY (`ID_MATERIA`),
   ADD UNIQUE KEY `id_usuario` (`ID_USUARIO`);
+
+--
+-- Indices de la tabla `MATERIAS_AULA`
+--
+ALTER TABLE `MATERIAS_AULA`
+  ADD PRIMARY KEY (`ID_MATERIA`,`ID_AULA`);
 
 --
 -- Indices de la tabla `USUARIO`
@@ -125,6 +174,12 @@ ALTER TABLE `USUARIO`
   ADD UNIQUE KEY `EMAIL` (`EMAIL`),
   ADD UNIQUE KEY `Dni` (`DNI`),
   ADD UNIQUE KEY `Cuit_cuil` (`CUIT_CUIL`);
+
+--
+-- Indices de la tabla `USUARIO_MATERIA_AULA`
+--
+ALTER TABLE `USUARIO_MATERIA_AULA`
+  ADD PRIMARY KEY (`ID_USUARIO`,`ID_MATERIA`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
