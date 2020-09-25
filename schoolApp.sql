@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 25-09-2020 a las 21:09:52
--- Versión del servidor: 10.4.11-MariaDB
--- Versión de PHP: 7.4.6
+-- Tiempo de generación: 25-09-2020 a las 23:14:43
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.2.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,30 +24,13 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ALUMNOS`
---
-
-CREATE TABLE `ALUMNOS` (
-  `ID_USUARIO` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `AULA`
 --
 
 CREATE TABLE `AULA` (
   `ID_AULA` int(11) NOT NULL,
-  `NOMBRE_AULA` varchar(50) NOT NULL
+  `NOMBRE` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `AULA`
---
-
-INSERT INTO `AULA` (`ID_AULA`, `NOMBRE_AULA`) VALUES
-(1, 'tomate');
 
 -- --------------------------------------------------------
 
@@ -67,16 +50,6 @@ CREATE TABLE `AULAS_MATERIAS` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `DOCENTE`
---
-
-CREATE TABLE `DOCENTE` (
-  `ID_USUARIO` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `EVALUACION`
 --
 
@@ -86,15 +59,6 @@ CREATE TABLE `EVALUACION` (
   `FECHA` date NOT NULL,
   `FINAL` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `EVALUACION`
---
-
-INSERT INTO `EVALUACION` (`ID_EVALUACION`, `ID_MATERIA`, `FECHA`, `FINAL`) VALUES
-(1, 1, '2020-12-12', 1),
-(3, 1, '2020-01-10', 0),
-(4, 1, '2020-10-12', 0);
 
 -- --------------------------------------------------------
 
@@ -126,17 +90,11 @@ CREATE TABLE `INSTANCIA_EVALUACION` (
 
 CREATE TABLE `MATERIA` (
   `ID_MATERIA` int(11) NOT NULL,
-  `NOMBRE_MATERIA` varchar(50) NOT NULL,
+  `NOMBRE` varchar(50) NOT NULL,
+  `NOTA` int(2) NOT NULL,
   `DIA` varchar(10) NOT NULL,
   `HORARIO` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `MATERIA`
---
-
-INSERT INTO `MATERIA` (`ID_MATERIA`, `NOMBRE_MATERIA`, `DIA`, `HORARIO`) VALUES
-(1, 'seminario', 'jueves', '18.30- 21.00');
 
 -- --------------------------------------------------------
 
@@ -166,7 +124,7 @@ CREATE TABLE `USUARIO` (
   `EMAIL` varchar(255) NOT NULL,
   `DNI` varchar(10) NOT NULL,
   `CONTRASEÑA` varchar(255) NOT NULL,
-  `CUIT_CUIL` varchar(15) NOT NULL,
+  `CUIL_CUIT` varchar(15) NOT NULL,
   `ROL` varchar(10) NOT NULL,
   `FECHA_NAC` date NOT NULL,
   `EDAD` varchar(3) NOT NULL
@@ -176,20 +134,12 @@ CREATE TABLE `USUARIO` (
 -- Volcado de datos para la tabla `USUARIO`
 --
 
-INSERT INTO `USUARIO` (`ID_USUARIO`, `DETERMINANDO`, `NOMBRE`, `APELLIDO`, `DIRECCION`, `EMAIL`, `DNI`, `CONTRASEÑA`, `CUIT_CUIL`, `ROL`, `FECHA_NAC`, `EDAD`) VALUES
-(1, NULL, 'marcelo fabian', 'Gutierrez', 'rems3029', 'marcelo3@mail.com', '33710646', '123456', '2033710646', 'estudiante', '1988-03-29', '32'),
-(2, NULL, 'gonzalo', 'figueras', 'rems3029', 'gonzalo@mail.com', '337106461', '$2a$10$ubGWjIZewRhSdJ04onNgmOy4kEnTtOwqTKp4Rs0jlj/M18adp5Uxi', '20337106461', 'docente', '1988-03-29', '32');
+INSERT INTO `USUARIO` (`ID_USUARIO`, `DETERMINANDO`, `NOMBRE`, `APELLIDO`, `DIRECCION`, `EMAIL`, `DNI`, `CONTRASEÑA`, `CUIL_CUIT`, `ROL`, `FECHA_NAC`, `EDAD`) VALUES
+(1, NULL, 'Gonzalo', 'Figueras', 'XCV<ZXC<ZXC', 'gonzalofigueras@gmail.com', '31932764', '<ZXC<ZXC<ZXCZ<XCZ<XC<ZXC', '2331932764', 'ADMIN', '2019-03-12', '35');
 
 --
 -- Índices para tablas volcadas
 --
-
---
--- Indices de la tabla `ALUMNOS`
---
-ALTER TABLE `ALUMNOS`
-  ADD PRIMARY KEY (`ID_USUARIO`),
-  ADD KEY `IXFK_ALUMNOS_USUARIO` (`ID_USUARIO`);
 
 --
 -- Indices de la tabla `AULA`
@@ -207,13 +157,6 @@ ALTER TABLE `AULAS_MATERIAS`
   ADD KEY `IXFK_AULAS_MATERIAS_DOCENTE` (`ID_DOCENTE`),
   ADD KEY `IXFK_AULAS_MATERIAS_INSTANCIA_EVALUACION` (`ID_INSTANCIA`),
   ADD KEY `IXFK_AULAS_MATERIAS_MATERIA` (`ID_MATERIA`);
-
---
--- Indices de la tabla `DOCENTE`
---
-ALTER TABLE `DOCENTE`
-  ADD PRIMARY KEY (`ID_USUARIO`),
-  ADD KEY `IXFK_DOCENTE_USUARIO` (`ID_USUARIO`);
 
 --
 -- Indices de la tabla `EVALUACION`
@@ -267,7 +210,7 @@ ALTER TABLE `USUARIO`
 -- AUTO_INCREMENT de la tabla `AULA`
 --
 ALTER TABLE `AULA`
-  MODIFY `ID_AULA` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID_AULA` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `AULAS_MATERIAS`
@@ -279,7 +222,7 @@ ALTER TABLE `AULAS_MATERIAS`
 -- AUTO_INCREMENT de la tabla `EVALUACION`
 --
 ALTER TABLE `EVALUACION`
-  MODIFY `ID_EVALUACION` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID_EVALUACION` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `INSCRIPCION`
@@ -297,7 +240,7 @@ ALTER TABLE `INSTANCIA_EVALUACION`
 -- AUTO_INCREMENT de la tabla `MATERIA`
 --
 ALTER TABLE `MATERIA`
-  MODIFY `ID_MATERIA` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID_MATERIA` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `NOTA_ALUMNO`
@@ -309,32 +252,20 @@ ALTER TABLE `NOTA_ALUMNO`
 -- AUTO_INCREMENT de la tabla `USUARIO`
 --
 ALTER TABLE `USUARIO`
-  MODIFY `ID_USUARIO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID_USUARIO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `ALUMNOS`
---
-ALTER TABLE `ALUMNOS`
-  ADD CONSTRAINT `FK_ALUMNOS_USUARIO` FOREIGN KEY (`ID_USUARIO`) REFERENCES `USUARIO` (`ID_USUARIO`);
-
---
 -- Filtros para la tabla `AULAS_MATERIAS`
 --
 ALTER TABLE `AULAS_MATERIAS`
   ADD CONSTRAINT `FK_AULAS_MATERIAS_AULA` FOREIGN KEY (`ID_AULA`) REFERENCES `AULA` (`ID_AULA`),
-  ADD CONSTRAINT `FK_AULAS_MATERIAS_DOCENTE` FOREIGN KEY (`ID_DOCENTE`) REFERENCES `DOCENTE` (`ID_USUARIO`),
   ADD CONSTRAINT `FK_AULAS_MATERIAS_MATERIA` FOREIGN KEY (`ID_MATERIA`) REFERENCES `MATERIA` (`ID_MATERIA`),
-  ADD CONSTRAINT `FK_AULAS_MATERIA_INSTANCIA_EVALUACION` FOREIGN KEY (`ID_INSTANCIA`) REFERENCES `INSTANCIA_EVALUACION` (`ID_INSTANCIA`);
-
---
--- Filtros para la tabla `DOCENTE`
---
-ALTER TABLE `DOCENTE`
-  ADD CONSTRAINT `FK_DOCENTE_USUARIO` FOREIGN KEY (`ID_USUARIO`) REFERENCES `USUARIO` (`ID_USUARIO`);
+  ADD CONSTRAINT `FK_AULAS_MATERIA_INSTANCIA_EVALUACION` FOREIGN KEY (`ID_INSTANCIA`) REFERENCES `INSTANCIA_EVALUACION` (`ID_INSTANCIA`),
+  ADD CONSTRAINT `FK_USUARIO_DOCENTE` FOREIGN KEY (`ID_DOCENTE`) REFERENCES `USUARIO` (`ID_USUARIO`);
 
 --
 -- Filtros para la tabla `EVALUACION`
@@ -346,8 +277,8 @@ ALTER TABLE `EVALUACION`
 -- Filtros para la tabla `INSCRIPCION`
 --
 ALTER TABLE `INSCRIPCION`
-  ADD CONSTRAINT `FK_INSCRIPCION_ALUMNOS` FOREIGN KEY (`ID_ALUMNO`) REFERENCES `ALUMNOS` (`ID_USUARIO`),
-  ADD CONSTRAINT `FK_INSCRIPCION_AULAS_MATERIAS` FOREIGN KEY (`ID_AULA_MATERIA`) REFERENCES `AULAS_MATERIAS` (`ID_REL`);
+  ADD CONSTRAINT `FK_INSCRIPCION_AULAS_MATERIAS` FOREIGN KEY (`ID_AULA_MATERIA`) REFERENCES `AULAS_MATERIAS` (`ID_REL`),
+  ADD CONSTRAINT `INSCRIPCION_ibfk_1` FOREIGN KEY (`ID_ALUMNO`) REFERENCES `USUARIO` (`ID_USUARIO`);
 
 --
 -- Filtros para la tabla `NOTA_ALUMNO`
