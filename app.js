@@ -9,6 +9,8 @@ var usuarioRoutes = require('./routes/users');
 var loginRoutes = require('./routes/login');
 var subjectsRoutes = require('./routes/subjects');
 var classRoomRoutes = require('./routes/classroom');
+var tipeUser = require('./routes/tipeUser');
+var evaluationRoutes = require('./routes/evaluation')
 
 var app = express();
 
@@ -46,6 +48,8 @@ app.use("/usuario", usuarioRoutes);
 app.use("/login", loginRoutes);
 app.use("/materia", subjectsRoutes);
 app.use("/aula", classRoomRoutes);
+app.use("/tipo", tipeUser);
+app.use("/evaluacion", evaluationRoutes);
 
 
 module.exports = app;
