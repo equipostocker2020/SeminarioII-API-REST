@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 25-09-2020 a las 23:14:43
+-- Tiempo de generación: 26-09-2020 a las 00:45:13
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.33
 
@@ -29,8 +29,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `AULA` (
   `ID_AULA` int(11) NOT NULL,
-  `NOMBRE` varchar(50) NOT NULL
+  `NOMBRE_AULA` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `AULA`
+--
+
+INSERT INTO `AULA` (`ID_AULA`, `NOMBRE_AULA`) VALUES
+(1, 'AULA MAGNA');
 
 -- --------------------------------------------------------
 
@@ -46,6 +53,13 @@ CREATE TABLE `AULAS_MATERIAS` (
   `ID_INSTANCIA` int(11) DEFAULT NULL,
   `ID_DOCENTE` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `AULAS_MATERIAS`
+--
+
+INSERT INTO `AULAS_MATERIAS` (`ID_AULA`, `ID_MATERIA`, `ANHO`, `ID_REL`, `ID_INSTANCIA`, `ID_DOCENTE`) VALUES
+(1, 1, '2020', 1, NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -90,11 +104,17 @@ CREATE TABLE `INSTANCIA_EVALUACION` (
 
 CREATE TABLE `MATERIA` (
   `ID_MATERIA` int(11) NOT NULL,
-  `NOMBRE` varchar(50) NOT NULL,
-  `NOTA` int(2) NOT NULL,
+  `NOMBRE_MATERIA` varchar(50) NOT NULL,
   `DIA` varchar(10) NOT NULL,
   `HORARIO` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `MATERIA`
+--
+
+INSERT INTO `MATERIA` (`ID_MATERIA`, `NOMBRE_MATERIA`, `DIA`, `HORARIO`) VALUES
+(1, 'AULA MAGNA', 'Lunes', '18.30 a 21.30');
 
 -- --------------------------------------------------------
 
@@ -124,7 +144,7 @@ CREATE TABLE `USUARIO` (
   `EMAIL` varchar(255) NOT NULL,
   `DNI` varchar(10) NOT NULL,
   `CONTRASEÑA` varchar(255) NOT NULL,
-  `CUIL_CUIT` varchar(15) NOT NULL,
+  `CUIT_CUIL` varchar(15) NOT NULL,
   `ROL` varchar(10) NOT NULL,
   `FECHA_NAC` date NOT NULL,
   `EDAD` varchar(3) NOT NULL
@@ -134,8 +154,9 @@ CREATE TABLE `USUARIO` (
 -- Volcado de datos para la tabla `USUARIO`
 --
 
-INSERT INTO `USUARIO` (`ID_USUARIO`, `DETERMINANDO`, `NOMBRE`, `APELLIDO`, `DIRECCION`, `EMAIL`, `DNI`, `CONTRASEÑA`, `CUIL_CUIT`, `ROL`, `FECHA_NAC`, `EDAD`) VALUES
-(1, NULL, 'Gonzalo', 'Figueras', 'XCV<ZXC<ZXC', 'gonzalofigueras@gmail.com', '31932764', '<ZXC<ZXC<ZXCZ<XCZ<XC<ZXC', '2331932764', 'ADMIN', '2019-03-12', '35');
+INSERT INTO `USUARIO` (`ID_USUARIO`, `DETERMINANDO`, `NOMBRE`, `APELLIDO`, `DIRECCION`, `EMAIL`, `DNI`, `CONTRASEÑA`, `CUIT_CUIL`, `ROL`, `FECHA_NAC`, `EDAD`) VALUES
+(2, NULL, 'Gonzalo', 'Figueras', 'Avenida Boyacá 1994, 5to 24', 'gonzalofigueras@gmail.com', '31932764', '$2a$10$R8Gvdn0p3JCJ3kl4JCkeX.zzg/rddXD8U.YpJOvmqNp/WbBR6JzVu', '23-31932764-9', 'Estudiante', '1985-12-01', '35'),
+(3, NULL, 'Juan', 'perez', 'tu casa 123', 'gonzalofigueras1@gmail.com', '56456789', '$2a$10$O0v/WVeF1bcy.IO1BWtOl.139vIgcKnQd/xQ/qBfnKuffEVzw9kNq', '654987', 'docente', '1985-12-01', '28');
 
 --
 -- Índices para tablas volcadas
@@ -210,13 +231,13 @@ ALTER TABLE `USUARIO`
 -- AUTO_INCREMENT de la tabla `AULA`
 --
 ALTER TABLE `AULA`
-  MODIFY `ID_AULA` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_AULA` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `AULAS_MATERIAS`
 --
 ALTER TABLE `AULAS_MATERIAS`
-  MODIFY `ID_REL` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_REL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `EVALUACION`
@@ -240,7 +261,7 @@ ALTER TABLE `INSTANCIA_EVALUACION`
 -- AUTO_INCREMENT de la tabla `MATERIA`
 --
 ALTER TABLE `MATERIA`
-  MODIFY `ID_MATERIA` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_MATERIA` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `NOTA_ALUMNO`
@@ -252,7 +273,7 @@ ALTER TABLE `NOTA_ALUMNO`
 -- AUTO_INCREMENT de la tabla `USUARIO`
 --
 ALTER TABLE `USUARIO`
-  MODIFY `ID_USUARIO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID_USUARIO` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
