@@ -14,7 +14,7 @@ mysqlConnection.connect(function(err) {
         throw (err);
 
     } else {
-        console.log("BD \x1b[32m%s\x1b[0m ", "SCHOOLAPP ONLINE");
+        console.log("\x1b[32m%s\x1b[0m ", "SCHOOLAPP ONLINE");
     }
 });
 
