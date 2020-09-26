@@ -4,7 +4,7 @@ var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
 router.get('/', (req, res) => {
-    mysqlConnection.query('SELECT A.NOMBRE, A.APELLIDO,B.NOMBRE_AULA,C.NOMBRE_MATERIA, C.DIA,C.HORARIO,AA.ANHO FROM AULAS_MATERIAS AA INNER JOIN USUARIO AS A ON A.ID_USUARIO = AA.ID_DOCENTE INNER JOIN AULA AS B ON B.ID_AULA= AA.ID_AULA INNER JOIN MATERIA AS C ON C.ID_MATERIA= AA.ID_MATERIA WHERE A.ROL = "Docente"', (err, rows) => {
+    mysqlConnection.query('SELECT ID_INSCRIPCION, A.NOMBRE, A.APELLIDO, C.NOMBRE_AULA, D.NOMBRE_MATERIA, D.DIA,D.HORARIO, B.ANHO FROM INSCRIPCION INNER JOIN USUARIO AS A ON A.ID_USUARIO = INSCRIPCION.ID_ALUMNO INNER JOIN AULAS_MATERIAS AS B ON B.ID_REL = INSCRIPCION.ID_AULA_MATERIA INNER JOIN AULA AS C ON C.ID_AULA = B.ID_AULA INNER JOIN MATERIA AS D ON D.ID_MATERIA = B.ID_MATERIA WHERE A.ROL = "Estudiante"', (err, rows) => {
         if (!err) {
             res.status(200).json({
                 ok: true,
@@ -22,13 +22,10 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     var body = req.body;
 
-    var sql = "INSERT INTO `AULAS_MATERIAS` SET ?";
+    var sql = "INSERT INTO `INSCRIPCION` SET ?";
     var post = {
-        id_aula: body.id_aula,
-        id_materia: body.id_materia,
-        anho: body.anho,
-        id_instancia: body.id_instancia,
-        id_docente: body.id_docente,
+        id_alumno: body.id_alumno,
+        id_aula_materia: body.id_aula_materia,
     };
     mysqlConnection.query(sql, post, (err, rows) => {
         if (!err)
@@ -49,13 +46,10 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var body = req.body;
 
-    var sql = 'UPDATE `AULAS_MATERIAS` SET ? WHERE ID_REL = "' + id + '"';
+    var sql = 'UPDATE `INSCRIPCION` SET ? WHERE ID_INSCRIPCION = "' + id + '"';
     var post = {
-        id_aula: body.id_aula,
-        id_materia: body.id_materia,
-        anho: body.anho,
-        id_instancia: body.id_instancia,
-        id_docente: body.id_docente,
+        id_alumno: body.id_alumno,
+        id_aula_materia: body.id_aula_materia,
     };
     console.log(post);
     mysqlConnection.query(sql, post, (err, rows) => {
@@ -72,10 +66,9 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
         }
     });
 });
-
 router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
-    var sql = "DELETE FROM `AULAS_MATERIAS` WHERE ID_REL = ?";
+    var sql = "DELETE FROM `INSCRIPCION` WHERE ID_INSCRIPCION = ?";
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
@@ -92,5 +85,7 @@ router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
             }
     });
 });
+
+// ESTA SELECT ES PARA SEGUIR MAÑANA SELECT A.NOMBRE, A.APELLIDO,B.NOMBRE_AULA,C.NOMBRE_MATERIA FROM AULAS_MATERIAS INNER JOIN USUARIO AS A ON A.ID_USUARIO = AULAS_MATERIAS.ID_DOCENTE INNER JOIN AULA AS B ON B.ID_AULA=AULAS_MATERIAS.ID_AULA INNER JOIN MATERIA AS C ON C.ID_MATERIA=AULAS_MATERIAS.ID_MATERIA
 
 module.exports = router;
