@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 26-09-2020 a las 00:45:13
+-- Tiempo de generación: 26-09-2020 a las 23:23:12
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.33
 
@@ -59,7 +59,7 @@ CREATE TABLE `AULAS_MATERIAS` (
 --
 
 INSERT INTO `AULAS_MATERIAS` (`ID_AULA`, `ID_MATERIA`, `ANHO`, `ID_REL`, `ID_INSTANCIA`, `ID_DOCENTE`) VALUES
-(1, 1, '2020', 1, NULL, 3);
+(1, 1, '2021', 1, NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -85,6 +85,13 @@ CREATE TABLE `INSCRIPCION` (
   `ID_ALUMNO` int(11) DEFAULT NULL,
   `ID_AULA_MATERIA` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `INSCRIPCION`
+--
+
+INSERT INTO `INSCRIPCION` (`ID_INSCRIPCION`, `ID_ALUMNO`, `ID_AULA_MATERIA`) VALUES
+(1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -237,7 +244,7 @@ ALTER TABLE `AULA`
 -- AUTO_INCREMENT de la tabla `AULAS_MATERIAS`
 --
 ALTER TABLE `AULAS_MATERIAS`
-  MODIFY `ID_REL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID_REL` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `EVALUACION`
@@ -249,7 +256,7 @@ ALTER TABLE `EVALUACION`
 -- AUTO_INCREMENT de la tabla `INSCRIPCION`
 --
 ALTER TABLE `INSCRIPCION`
-  MODIFY `ID_INSCRIPCION` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_INSCRIPCION` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `INSTANCIA_EVALUACION`
