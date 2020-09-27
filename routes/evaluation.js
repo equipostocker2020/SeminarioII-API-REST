@@ -4,7 +4,7 @@ var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
 router.get("/", mdAutenticacion.verificaToken, (req, res) => {
-    mysqlConnection.query('SELECT B.NOMBRE_MATERIA, A.FECHA, A.FINAL FROM EVALUACION A INNER JOIN MATERIA AS B ON B.ID_MATERIA=A.ID_MATERIA`', (err, rows) => {
+    mysqlConnection.query('SELECT B.NOMBRE_MATERIA, A.FECHA, A.FINAL, C.NOMBRE_AULA FROM EVALUACION A INNER JOIN MATERIA AS B ON B.ID_MATERIA = A.ID_MATERIA INNER JOIN AULA AS C', (err, rows) => {
         if (!err) {
             res.status(200).json({
                 ok: true,
