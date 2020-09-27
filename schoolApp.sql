@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 26-09-2020 a las 23:23:12
+-- Tiempo de generación: 27-09-2020 a las 20:04:12
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.33
 
@@ -29,15 +29,16 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `AULA` (
   `ID_AULA` int(11) NOT NULL,
-  `NOMBRE_AULA` varchar(50) NOT NULL
+  `NOMBRE_AULA` varchar(50) NOT NULL,
+  `ESTADO` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `AULA`
 --
 
-INSERT INTO `AULA` (`ID_AULA`, `NOMBRE_AULA`) VALUES
-(1, 'AULA MAGNA');
+INSERT INTO `AULA` (`ID_AULA`, `NOMBRE_AULA`, `ESTADO`) VALUES
+(1, 'AULA MAGNA', '');
 
 -- --------------------------------------------------------
 
@@ -51,15 +52,16 @@ CREATE TABLE `AULAS_MATERIAS` (
   `ANHO` varchar(50) NOT NULL,
   `ID_REL` int(11) NOT NULL,
   `ID_INSTANCIA` int(11) DEFAULT NULL,
-  `ID_DOCENTE` int(11) DEFAULT NULL
+  `ID_DOCENTE` int(11) DEFAULT NULL,
+  `ESTADO` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `AULAS_MATERIAS`
 --
 
-INSERT INTO `AULAS_MATERIAS` (`ID_AULA`, `ID_MATERIA`, `ANHO`, `ID_REL`, `ID_INSTANCIA`, `ID_DOCENTE`) VALUES
-(1, 1, '2021', 1, NULL, 3);
+INSERT INTO `AULAS_MATERIAS` (`ID_AULA`, `ID_MATERIA`, `ANHO`, `ID_REL`, `ID_INSTANCIA`, `ID_DOCENTE`, `ESTADO`) VALUES
+(1, 1, '2021', 1, NULL, 3, 'ACTIVO');
 
 -- --------------------------------------------------------
 
@@ -71,7 +73,8 @@ CREATE TABLE `EVALUACION` (
   `ID_EVALUACION` int(11) NOT NULL,
   `ID_MATERIA` int(11) DEFAULT NULL,
   `FECHA` date NOT NULL,
-  `FINAL` tinyint(1) NOT NULL DEFAULT 0
+  `FINAL` tinyint(1) NOT NULL DEFAULT 0,
+  `ESTADO` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -83,15 +86,16 @@ CREATE TABLE `EVALUACION` (
 CREATE TABLE `INSCRIPCION` (
   `ID_INSCRIPCION` int(11) NOT NULL,
   `ID_ALUMNO` int(11) DEFAULT NULL,
-  `ID_AULA_MATERIA` int(11) DEFAULT NULL
+  `ID_AULA_MATERIA` int(11) DEFAULT NULL,
+  `ESTADO` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `INSCRIPCION`
 --
 
-INSERT INTO `INSCRIPCION` (`ID_INSCRIPCION`, `ID_ALUMNO`, `ID_AULA_MATERIA`) VALUES
-(1, 2, 1);
+INSERT INTO `INSCRIPCION` (`ID_INSCRIPCION`, `ID_ALUMNO`, `ID_AULA_MATERIA`, `ESTADO`) VALUES
+(1, 2, 1, 'ACTIVO');
 
 -- --------------------------------------------------------
 
@@ -100,8 +104,25 @@ INSERT INTO `INSCRIPCION` (`ID_INSCRIPCION`, `ID_ALUMNO`, `ID_AULA_MATERIA`) VAL
 --
 
 CREATE TABLE `INSTANCIA_EVALUACION` (
-  `ID_INSTANCIA` int(11) NOT NULL
+  `ID_INSTANCIA` int(11) NOT NULL,
+  `NOMBRE_INSTANCIA` varchar(255) NOT NULL,
+  `ESTADO` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `INSTANCIA_EVALUACION`
+--
+
+INSERT INTO `INSTANCIA_EVALUACION` (`ID_INSTANCIA`, `NOMBRE_INSTANCIA`, `ESTADO`) VALUES
+(1, 'Primer Parcial', 'ACTIVO'),
+(2, 'Segundo Parcial', 'ACTIVO'),
+(3, 'Primer Final Febrero', 'ACTIVO'),
+(4, 'Segundo Final Febrero', 'ACTIVO'),
+(5, 'Primer Final Julio', 'ACTIVO'),
+(6, 'Segundo Final Julio', 'ACTIVO'),
+(7, 'Primer final Diciembre', 'ACTIVO'),
+(8, 'Segundo Final Diciembre', 'ACTIVO'),
+(9, 'Prueba PUT', 'ACTIVO');
 
 -- --------------------------------------------------------
 
@@ -113,15 +134,16 @@ CREATE TABLE `MATERIA` (
   `ID_MATERIA` int(11) NOT NULL,
   `NOMBRE_MATERIA` varchar(50) NOT NULL,
   `DIA` varchar(10) NOT NULL,
-  `HORARIO` varchar(20) NOT NULL
+  `HORARIO` varchar(20) NOT NULL,
+  `ESTADO` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `MATERIA`
 --
 
-INSERT INTO `MATERIA` (`ID_MATERIA`, `NOMBRE_MATERIA`, `DIA`, `HORARIO`) VALUES
-(1, 'AULA MAGNA', 'Lunes', '18.30 a 21.30');
+INSERT INTO `MATERIA` (`ID_MATERIA`, `NOMBRE_MATERIA`, `DIA`, `HORARIO`, `ESTADO`) VALUES
+(1, 'AULA MAGNA', 'Lunes', '18.30 a 21.30', 'ACTIVO');
 
 -- --------------------------------------------------------
 
@@ -133,7 +155,8 @@ CREATE TABLE `NOTA_ALUMNO` (
   `ID_NOTA` int(11) NOT NULL,
   `ID_INSCRIPCION` int(11) DEFAULT NULL,
   `ID_INSTANCIA` int(11) DEFAULT NULL,
-  `NOTA` varchar(50) DEFAULT NULL
+  `NOTA` varchar(50) DEFAULT NULL,
+  `ESTADO` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -154,16 +177,17 @@ CREATE TABLE `USUARIO` (
   `CUIT_CUIL` varchar(15) NOT NULL,
   `ROL` varchar(10) NOT NULL,
   `FECHA_NAC` date NOT NULL,
-  `EDAD` varchar(3) NOT NULL
+  `EDAD` varchar(3) NOT NULL,
+  `ESTADO` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `USUARIO`
 --
 
-INSERT INTO `USUARIO` (`ID_USUARIO`, `DETERMINANDO`, `NOMBRE`, `APELLIDO`, `DIRECCION`, `EMAIL`, `DNI`, `CONTRASEÑA`, `CUIT_CUIL`, `ROL`, `FECHA_NAC`, `EDAD`) VALUES
-(2, NULL, 'Gonzalo', 'Figueras', 'Avenida Boyacá 1994, 5to 24', 'gonzalofigueras@gmail.com', '31932764', '$2a$10$R8Gvdn0p3JCJ3kl4JCkeX.zzg/rddXD8U.YpJOvmqNp/WbBR6JzVu', '23-31932764-9', 'Estudiante', '1985-12-01', '35'),
-(3, NULL, 'Juan', 'perez', 'tu casa 123', 'gonzalofigueras1@gmail.com', '56456789', '$2a$10$O0v/WVeF1bcy.IO1BWtOl.139vIgcKnQd/xQ/qBfnKuffEVzw9kNq', '654987', 'docente', '1985-12-01', '28');
+INSERT INTO `USUARIO` (`ID_USUARIO`, `DETERMINANDO`, `NOMBRE`, `APELLIDO`, `DIRECCION`, `EMAIL`, `DNI`, `CONTRASEÑA`, `CUIT_CUIL`, `ROL`, `FECHA_NAC`, `EDAD`, `ESTADO`) VALUES
+(2, NULL, 'Gonzalo', 'Figueras', 'Avenida Boyacá 1994, 5to 24', 'gonzalofigueras@gmail.com', '31932764', '$2a$10$R8Gvdn0p3JCJ3kl4JCkeX.zzg/rddXD8U.YpJOvmqNp/WbBR6JzVu', '23-31932764-9', 'Estudiante', '1985-12-01', '35', 'ACTIVO'),
+(3, NULL, 'Juan', 'perez', 'tu casa 123', 'gonzalofigueras1@gmail.com', '56456789', '$2a$10$O0v/WVeF1bcy.IO1BWtOl.139vIgcKnQd/xQ/qBfnKuffEVzw9kNq', '654987', 'docente', '1985-12-01', '28', 'ACTIVO');
 
 --
 -- Índices para tablas volcadas
@@ -262,7 +286,7 @@ ALTER TABLE `INSCRIPCION`
 -- AUTO_INCREMENT de la tabla `INSTANCIA_EVALUACION`
 --
 ALTER TABLE `INSTANCIA_EVALUACION`
-  MODIFY `ID_INSTANCIA` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_INSTANCIA` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `MATERIA`
