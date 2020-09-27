@@ -3,7 +3,7 @@ var router = express.Router();
 var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
-router.get('/', (req, res) => {
+router.get("/", mdAutenticacion.verificaToken, (req, res) => {
     mysqlConnection.query('SELECT * FROM INSTANCIA_EVALUACION', (err, rows) => {
         if (!err) {
             res.status(200).json({
@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
+router.post('/', mdAutenticacion.verificaToken, (req, res) => {
     var body = req.body;
 
     var sql = "INSERT INTO `INSTANCIA_EVALUACION` SET ?";

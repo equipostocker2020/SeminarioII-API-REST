@@ -3,7 +3,7 @@ var router = express.Router();
 var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
-router.get('/', (req, res) => {
+router.get('/', mdAutenticacion.verificaToken, (req, res) => {
     mysqlConnection.query('SELECT ID_INSCRIPCION, A.NOMBRE, A.APELLIDO, C.NOMBRE_AULA, D.NOMBRE_MATERIA, D.DIA,D.HORARIO, B.ANHO FROM INSCRIPCION INNER JOIN USUARIO AS A ON A.ID_USUARIO = INSCRIPCION.ID_ALUMNO INNER JOIN AULAS_MATERIAS AS B ON B.ID_REL = INSCRIPCION.ID_AULA_MATERIA INNER JOIN AULA AS C ON C.ID_AULA = B.ID_AULA INNER JOIN MATERIA AS D ON D.ID_MATERIA = B.ID_MATERIA WHERE A.ROL = "Estudiante"', (err, rows) => {
         if (!err) {
             res.status(200).json({
@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
+router.post('/', mdAutenticacion.verificaToken, (req, res) => {
     var body = req.body;
 
     var sql = "INSERT INTO `INSCRIPCION` SET ?";

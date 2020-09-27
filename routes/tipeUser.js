@@ -5,7 +5,7 @@ var bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
 var mdAutenticacion = require("../middlewares/autentication");
 
-router.get("/alumno", (req, res) => {
+router.get("/alumno", mdAutenticacion.verificaToken, (req, res) => {
     var sql = 'SELECT * FROM `USUARIO` WHERE USUARIO.ROL = "estudiante"';
     console.log(sql);
     mysqlConnection.query(sql, (err, rows) => {
@@ -24,7 +24,7 @@ router.get("/alumno", (req, res) => {
             }
     });
 });
-router.get("/docente", (req, res) => {
+router.get("/docente", mdAutenticacion.verificaToken, (req, res) => {
     var sql = 'SELECT * FROM `USUARIO` WHERE USUARIO.ROL = "docente"';
     console.log(sql);
     mysqlConnection.query(sql, (err, rows) => {

@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
     });
 });
 //obtener usuarios por id
-router.get('/:id', (req, res) => {
+router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
 
     var id = req.params.id;
     var sql = 'SELECT * FROM `USUARIO` WHERE ID_USUARIO = "' + id + '"';
@@ -44,7 +44,7 @@ router.get('/:id', (req, res) => {
     });
 });
 // crear un usuario
-router.post('/', (req, res) => {
+router.post('/', mdAutenticacion.verificaToken, (req, res) => {
     var body = req.body;
 
     var sql = "INSERT INTO `USUARIO` SET ?";

@@ -3,7 +3,7 @@ var router = express.Router();
 var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
-router.get("/", (req, res) => {
+router.get("/", mdAutenticacion.verificaToken, (req, res) => {
     mysqlConnection.query('SELECT B.NOMBRE_MATERIA, A.FECHA, A.FINAL FROM EVALUACION A INNER JOIN MATERIA AS B ON B.ID_MATERIA=A.ID_MATERIA`', (err, rows) => {
         if (!err) {
             res.status(200).json({
@@ -18,8 +18,7 @@ router.get("/", (req, res) => {
         }
     });
 });
-
-router.post("/", (req, res) => {
+router.post("/", mdAutenticacion.verificaToken, (req, res) => {
     var body = req.body;
 
     var sql = "INSERT INTO `EVALUACION` SET ?";
@@ -41,8 +40,7 @@ router.post("/", (req, res) => {
         }
     });
 });
-
-router.delete("/:id", (req, res) => {
+router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var sql = "DELETE FROM `EVALUACION` WHERE ID_EVALUACION= ?";
 
@@ -85,9 +83,5 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
         }
     });
 });
-
-
-
-
 
 module.exports = router;
