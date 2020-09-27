@@ -3,12 +3,12 @@ var router = express.Router();
 var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
-router.get("/", (req, res) => {
-    mysqlConnection.query('SELECT B.NOMBRE_MATERIA, A.FECHA, A.FINAL FROM EVALUACION A INNER JOIN MATERIA AS B ON B.ID_MATERIA=A.ID_MATERIA`', (err, rows) => {
+router.get('/', (req, res) => {
+    mysqlConnection.query('SELECT * FROM INSTANCIA_EVALUACION', (err, rows) => {
         if (!err) {
             res.status(200).json({
                 ok: true,
-                evaluaciones: rows,
+                usuario: rows,
             });
         } else {
             return res.status(500).json({
@@ -19,19 +19,18 @@ router.get("/", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
     var body = req.body;
 
-    var sql = "INSERT INTO `EVALUACION` SET ?";
+    var sql = "INSERT INTO `INSTANCIA_EVALUACION` SET ?";
     var post = {
-        id_materia: body.id_materia,
-        fecha: body.fecha
+        nombre_instancia: body.nombre_instancia,
     };
     mysqlConnection.query(sql, post, (err, rows) => {
         if (!err)
             res.status(201).json({
                 ok: true,
-                evaluacion: post
+                usuario: post
             });
         else {
             return res.status(400).json({
@@ -42,9 +41,33 @@ router.post("/", (req, res) => {
     });
 });
 
-router.delete("/:id", (req, res) => {
+router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
-    var sql = "DELETE FROM `EVALUACION` WHERE ID_EVALUACION= ?";
+    var body = req.body;
+
+    var sql = 'UPDATE `INSTANCIA_EVALUACION` SET ? WHERE ID_INSTANCIA = "' + id + '"';
+    var post = {
+        nombre_instancia: body.nombre_instancia
+    };
+    console.log(post);
+    mysqlConnection.query(sql, post, (err, rows) => {
+        if (!err)
+            res.status(200).json({
+                ok: true,
+                aula: post
+            });
+        else {
+            return res.status(400).json({
+                ok: false,
+                errors: err,
+            });
+        }
+    });
+});
+
+router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
+    var id = req.params.id;
+    var sql = "DELETE FROM `INSTANCIA_EVALUACION` WHERE ID_INSTANCIA = ?";
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
@@ -56,38 +79,10 @@ router.delete("/:id", (req, res) => {
             } else {
                 res.status(200).json({
                     ok: true,
-                    evaluacion: "Se ha borrado el Registro que corresponde al ID:" + id
+                    aula: "Se ha borrado el Registro que corresponde al ID:" + id
                 });
             }
     });
 });
-router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
-
-    var id = req.params.id;
-    var body = req.body;
-
-    var sql = 'UPDATE `EVALUACION` SET ? WHERE ID_EVALUACION = "' + id + '"';
-    var post = {
-        id_materia: body.id_materia,
-        fecha: body.fecha
-    };
-    mysqlConnection.query(sql, post, (err, rows) => {
-        if (!err)
-            res.status(200).json({
-                ok: true,
-                evaluacion: post
-            });
-        else {
-            return res.status(400).json({
-                ok: false,
-                errors: err,
-            });
-        }
-    });
-});
-
-
-
-
 
 module.exports = router;

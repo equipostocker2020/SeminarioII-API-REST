@@ -11,8 +11,10 @@ var subjectsRoutes = require('./routes/subjects');
 var classRoomRoutes = require('./routes/classroom');
 var tipeUser = require('./routes/tipeUser');
 var evaluationRoutes = require('./routes/evaluation');
-var aulasMateriasRoutes = require('./routes/aulas_materias');
-var inscripcionRoutes = require('./routes/inscripcion');
+var classroomSubjectRoutes = require('./routes/classroomSubject');
+var inscriptionRoutes = require('./routes/inscription');
+var evaluationInstanceRoutes = require('./routes/evaluationInstance');
+var studentNoteRoutes = require('./routes/studentNote');
 
 var app = express();
 
@@ -52,7 +54,9 @@ app.use("/materia", subjectsRoutes);
 app.use("/aula", classRoomRoutes);
 app.use("/tipo", tipeUser);
 app.use("/evaluacion", evaluationRoutes);
-app.use("/aulas_materias", aulasMateriasRoutes);
-app.use("/inscripcion", inscripcionRoutes);
+app.use("/aulas_materias", classroomSubjectRoutes);
+app.use("/inscripcion", inscriptionRoutes);
+app.use("/instancia_evaluacion", evaluationInstanceRoutes);
+app.use("/nota_alumno", studentNoteRoutes);
 
 module.exports = app;
