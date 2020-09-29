@@ -325,7 +325,7 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `aulas_materias`
 --
 ALTER TABLE `aulas_materias`
-  ADD CONSTRAINT `fk_aulas_materias_aula` FOREIGN KEY (`id_aula`) REFERENCES `AULA` (`id_aula`),
+  ADD CONSTRAINT `fk_aulas_materias_aula` FOREIGN KEY (`id_aula`) REFERENCES `aula` (`id_aula`),
   ADD CONSTRAINT `fk_aulas_materias_materia` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`),
   ADD CONSTRAINT `fk_aulas_materia_instancia_evaluacion` FOREIGN KEY (`id_instancia`) REFERENCES `instancia_evaluacion` (`id_instancia`),
   ADD CONSTRAINT `fk_usuario_docente` FOREIGN KEY (`id_docente`) REFERENCES `usuario` (`id_usuario`);
