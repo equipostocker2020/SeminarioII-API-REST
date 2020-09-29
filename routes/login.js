@@ -27,7 +27,7 @@ router.post("/", (req, res) => {
                 ok: false,
                 message: 'Credenciales invalidas - email'
             });
-        }
+        }  
         if (rows.length) {
             rows.forEach(function(row) {
                 if (!bcrypt.compareSync(body.contraseña, row.contraseña)) {
