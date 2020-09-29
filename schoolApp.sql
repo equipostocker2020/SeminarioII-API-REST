@@ -201,10 +201,6 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id_usuario`, `determinado`, `nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`) VALUES
-(2, NULL, 'Gonzalo', 'Figueras', 'Avenida Boyacá 1994, 5to 24', 'gonzalofigueras@gmail.com', '31932764', '$2a$10$R8Gvdn0p3JCJ3kl4JCkeX.zzg/rddXD8U.YpJOvmqNp/WbBR6JzVu', '23-31932764-9', 'Estudiante', '1985-12-01', '35', 'ACTIVO'),
-(3, NULL, 'Juan', 'perez', 'tu casa 123', 'gonzalofigueras1@gmail.com', '56456789', '$2a$10$O0v/WVeF1bcy.IO1BWtOl.139vIgcKnQd/xQ/qBfnKuffEVzw9kNq', '654987', 'docente', '1985-12-01', '28', 'ACTIVO');
-
 --
 -- Índices para tablas volcadas
 --
@@ -221,17 +217,17 @@ ALTER TABLE `aula`
 ALTER TABLE `aulas_materias`
   ADD PRIMARY KEY (`id_rel`),
   ADD UNIQUE KEY `unique` (`anho`,`id_materia`,`Id_aula`),
-  ADD KEY `IXFK_AULAS_MATERIAS_AULA` (`Id_aula`),
-  ADD KEY `IXFK_AULAS_MATERIAS_DOCENTE` (`id_docente`),
-  ADD KEY `IXFK_AULAS_MATERIAS_INSTANCIA_EVALUACION` (`id_instancia`),
-  ADD KEY `IXFK_AULAS_MATERIAS_MATERIA` (`id_materia`);
+  ADD KEY `ixfk_aulas_materias_aula` (`Id_aula`),
+  ADD KEY `ixfk_aulas_materias_docente` (`id_docente`),
+  ADD KEY `ixfk_aulas_materias_instancia_evaluacion` (`id_instancia`),
+  ADD KEY `ixfk_aulas_materias_materia` (`id_materia`);
 
 --
 -- Indices de la tabla `evaluacion`
 --
 ALTER TABLE `evaluacion`
   ADD PRIMARY KEY (`id_evaluacion`),
-  ADD KEY `IXFK_EVALUACION_MATERIA` (`id_materia`);
+  ADD KEY `ixfk_evaluacion_materia` (`id_materia`);
 
 --
 -- Indices de la tabla `inscripcion`
@@ -239,8 +235,8 @@ ALTER TABLE `evaluacion`
 ALTER TABLE `inscripcion`
   ADD PRIMARY KEY (`id_inscripcion`),
   ADD UNIQUE KEY `Unique` (`id_alumno`,`id_aula_materia`),
-  ADD KEY `IXFK_INSCRIPCION_ALUMNOS` (`id_alumno`),
-  ADD KEY `IXFK_INSCRIPCION_AULAS_MATERIAS` (`id_aula_materia`);
+  ADD KEY `ixfk_inscripcion_alumnos` (`id_alumno`),
+  ADD KEY `ixfk_inscripcion_aulas_materias` (`id_aula_materia`);
 
 --
 -- Indices de la tabla `instancia_evaluacion`
@@ -260,10 +256,9 @@ ALTER TABLE `materia`
 ALTER TABLE `nota_alumno`
   ADD PRIMARY KEY (`id_nota`),
   ADD UNIQUE KEY `UNICA` (`id_inscripcion`,`id_instancia`),
-  ADD KEY `IXFK_NOTA_ALUMNO_INSCRIPCION` (`id_inscripcion`),
-  ADD KEY `IXFK_NOTA_ALUMNO_INSCRIPCION_02` (`id_inscripcion`),
-  ADD KEY `IXFK_NOTA_ALUMNO_INSTANCIA_EVALUACION` (`id_instancia`);
-
+  ADD KEY `ixfk_nota_alumno_inscripcion` (`id_inscripcion`),
+  ADD KEY `ixfk_nota_alumno_inscripcion_02` (`id_inscripcion`),
+  ADD KEY `ixfk_nota_alumno_instancia_evaluacion` (`id_instancia`);
 --
 -- Indices de la tabla `usuario`
 --
@@ -330,31 +325,32 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `aulas_materias`
 --
 ALTER TABLE `aulas_materias`
-  ADD CONSTRAINT `FK_AULAS_MATERIAS_AULA` FOREIGN KEY (`ID_AULA`) REFERENCES `AULA` (`ID_AULA`),
-  ADD CONSTRAINT `FK_AULAS_MATERIAS_MATERIA` FOREIGN KEY (`ID_MATERIA`) REFERENCES `materia` (`ID_MATERIA`),
-  ADD CONSTRAINT `FK_AULAS_MATERIA_INSTANCIA_EVALUACION` FOREIGN KEY (`ID_INSTANCIA`) REFERENCES `instancia_evaluacion` (`ID_INSTANCIA`),
-  ADD CONSTRAINT `FK_USUARIO_DOCENTE` FOREIGN KEY (`ID_DOCENTE`) REFERENCES `usuario` (`ID_USUARIO`);
+  ADD CONSTRAINT `fk_aulas_materias_aula` FOREIGN KEY (`id_aula`) REFERENCES `AULA` (`id_aula`),
+  ADD CONSTRAINT `fk_aulas_materias_materia` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`),
+  ADD CONSTRAINT `fk_aulas_materia_instancia_evaluacion` FOREIGN KEY (`id_instancia`) REFERENCES `instancia_evaluacion` (`id_instancia`),
+  ADD CONSTRAINT `fk_usuario_docente` FOREIGN KEY (`id_docente`) REFERENCES `usuario` (`id_usuario`);
 
 --
 -- Filtros para la tabla `evaluacion`
 --
 ALTER TABLE `evaluacion`
-  ADD CONSTRAINT `FK_EVALUACION_MATERIA` FOREIGN KEY (`ID_MATERIA`) REFERENCES `materia` (`ID_MATERIA`);
+  ADD CONSTRAINT `fk_evaluacion_materia` FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`);
 
 --
 -- Filtros para la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  ADD CONSTRAINT `FK_INSCRIPCION_AULAS_MATERIAS` FOREIGN KEY (`ID_AULA_MATERIA`) REFERENCES `AULAS_MATERIAS` (`ID_REL`),
-  ADD CONSTRAINT `INSCRIPCION_ibfk_1` FOREIGN KEY (`ID_ALUMNO`) REFERENCES `usuario` (`ID_USUARIO`);
+  ADD CONSTRAINT `fk_inscripcion_aulas_materia` FOREIGN KEY (`id_aula_materia`) REFERENCES `aula_materias` (`id_rel`),
+  ADD CONSTRAINT `inscripcion_ibfk_1` FOREIGN KEY (`id_alumno`) REFERENCES `usuario` (`id_usuario`);
 
 --
 -- Filtros para la tabla `nota_alumno`
 --
 ALTER TABLE `nota_alumno`
-  ADD CONSTRAINT `FK_NOTA_ALUMNO_INSCRIPCION` FOREIGN KEY (`ID_INSCRIPCION`) REFERENCES `INSCRIPCION` (`ID_INSCRIPCION`),
-  ADD CONSTRAINT `FK_NOTA_ALUMNO_INSCRIPCION_02` FOREIGN KEY (`ID_INSCRIPCION`) REFERENCES `INSCRIPCION` (`ID_INSCRIPCION`),
-  ADD CONSTRAINT `FK_NOTA_ALUMNO_INSTANCIA_EVALUACION` FOREIGN KEY (`ID_INSTANCIA`) REFERENCES `INSTANCIA_EVALUACION` (`ID_INSTANCIA`);
+  ADD CONSTRAINT `fk_nota_alumno_inscripcion` FOREIGN KEY (`id_inscripcion`) REFERENCES `inscripcion` (`id_inscripcion`),
+  ADD CONSTRAINT `fk_nota_alumno_inscripcion_02` FOREIGN KEY (`id_inscripcion`) REFERENCES `inscripcion` (`id_inscripcion`),
+  ADD CONSTRAINT `fk_nota_alumno_instancia_evaluacion` FOREIGN KEY (`id_instancia`) REFERENCES `instancia_evaluacion` (`id_instancia`);
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

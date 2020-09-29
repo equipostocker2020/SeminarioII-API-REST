@@ -40,7 +40,8 @@ router.post("/", (req, res) => {
                     res.status(200).json({
                         ok: true,
                         email: row.email,
-                        contraseña: row.contraseña,
+                        id: row.id_usuario,
+                        usuario: row,
                         token: token
                     });
                 }
