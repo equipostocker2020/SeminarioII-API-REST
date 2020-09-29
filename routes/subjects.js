@@ -4,7 +4,7 @@ var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
 router.get("/", mdAutenticacion.verificaToken, (req, res) => {
-    var sql = 'SELECT * FROM `MATERIA`';
+    var sql = 'SELECT * FROM `materia`';
     mysqlConnection.query(sql, (err, rows) => {
         if (!err) {
             res.status(200).json({
@@ -23,7 +23,7 @@ router.get("/", mdAutenticacion.verificaToken, (req, res) => {
 router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
 
     var id = req.params.id;
-    var sql = 'SELECT * FROM `MATERIA` WHERE ID_MATERIA = "' + id + '"';
+    var sql = 'SELECT * FROM `materia` WHERE id_materia = "' + id + '"';
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
@@ -44,7 +44,7 @@ router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
 router.post("/", mdAutenticacion.verificaToken, (req, res) => {
     var body = req.body;
 
-    var sql = "INSERT INTO `MATERIA` SET ?";
+    var sql = "INSERT INTO `materia` SET ?";
     var post = {
         nombre_materia: body.nombre_materia,
         dia: body.dia,
@@ -69,7 +69,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var body = req.body;
 
-    var sql = 'UPDATE `MATERIA` SET ? WHERE ID_MATERIA = "' + id + '"';
+    var sql = 'UPDATE `materia` SET ? WHERE id_materia = "' + id + '"';
     var post = {
         nombre_materia: body.nombre_materia,
         dia: body.dia,
@@ -93,7 +93,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
 
 router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
-    var sql = "DELETE FROM `MATERIA` WHERE ID_MATERIA= ?";
+    var sql = "DELETE FROM `materia` WHERE id_materia= ?";
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)

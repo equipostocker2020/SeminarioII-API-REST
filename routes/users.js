@@ -8,7 +8,7 @@ var mdAutenticacion = require("../middlewares/autentication");
 
 // obtener usuarios
 router.get('/', (req, res) => {
-    mysqlConnection.query('SELECT * FROM `USUARIO`', (err, rows) => {
+    mysqlConnection.query('SELECT * FROM `usuario`', (err, rows) => {
         if (!err) {
             res.status(200).json({
                 ok: true,
@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
 router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
 
     var id = req.params.id;
-    var sql = 'SELECT * FROM `USUARIO` WHERE ID_USUARIO = "' + id + '"';
+    var sql = 'SELECT * FROM `usuario` WHERE id_usuario = "' + id + '"';
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
@@ -44,10 +44,10 @@ router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
     });
 });
 // crear un usuario
-router.post('/', mdAutenticacion.verificaToken, (req, res) => {
+router.post('/', (req, res) => {
     var body = req.body;
 
-    var sql = "INSERT INTO `USUARIO` SET ?";
+    var sql = "INSERT INTO `usuario` SET ?";
     var post = {
         nombre: body.nombre,
         apellido: body.apellido,
@@ -77,7 +77,7 @@ router.post('/', mdAutenticacion.verificaToken, (req, res) => {
 //elimina un usuario
 router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
-    var sql = "DELETE FROM `USUARIO` WHERE ID_USUARIO= ?";
+    var sql = "DELETE FROM `usuario` WHERE id_usuario= ?";
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
@@ -100,7 +100,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var body = req.body;
 
-    var sql = 'UPDATE `USUARIO` SET ? WHERE ID_USUARIO = "' + id + '"';
+    var sql = 'UPDATE `usuario` SET ? WHERE id_usuario = "' + id + '"';
     var post = {
         nombre: body.nombre,
         apellido: body.apellido,

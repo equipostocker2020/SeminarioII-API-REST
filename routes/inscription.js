@@ -4,7 +4,7 @@ var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
 router.get('/', mdAutenticacion.verificaToken, (req, res) => {
-    mysqlConnection.query('SELECT ID_INSCRIPCION, A.NOMBRE, A.APELLIDO, C.NOMBRE_AULA, D.NOMBRE_MATERIA, D.DIA,D.HORARIO, B.ANHO FROM INSCRIPCION INNER JOIN USUARIO AS A ON A.ID_USUARIO = INSCRIPCION.ID_ALUMNO INNER JOIN AULAS_MATERIAS AS B ON B.ID_REL = INSCRIPCION.ID_AULA_MATERIA INNER JOIN AULA AS C ON C.ID_AULA = B.ID_AULA INNER JOIN MATERIA AS D ON D.ID_MATERIA = B.ID_MATERIA WHERE A.ROL = "Estudiante"', (err, rows) => {
+    mysqlConnection.query('SELECT id_inscripcion, A.nombre, A.apellido, C.nombre_aula, D.nombre_materia, D.dia, D.horario, B.anho FROM inscripcion INNER JOIN usuario AS A ON A.id_usuario = inscripcion.id_alumno INNER JOIN aulas_materias AS B ON B.id_rel = inscripcion.id_aula_materia INNER JOIN aula AS C ON C.id_aula = B.id_aula INNER JOIN materia AS D ON D.id_materia = B.id_materia WHERE A.rol = "Estudiante"', (err, rows) => {
         if (!err) {
             res.status(200).json({
                 ok: true,
@@ -22,7 +22,7 @@ router.get('/', mdAutenticacion.verificaToken, (req, res) => {
 router.post('/', mdAutenticacion.verificaToken, (req, res) => {
     var body = req.body;
 
-    var sql = "INSERT INTO `INSCRIPCION` SET ?";
+    var sql = "INSERT INTO `inscripcion` SET ?";
     var post = {
         id_alumno: body.id_alumno,
         id_aula_materia: body.id_aula_materia,
@@ -46,7 +46,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var body = req.body;
 
-    var sql = 'UPDATE `INSCRIPCION` SET ? WHERE ID_INSCRIPCION = "' + id + '"';
+    var sql = 'UPDATE `inscripcion` SET ? WHERE id_inscripcion = "' + id + '"';
     var post = {
         id_alumno: body.id_alumno,
         id_aula_materia: body.id_aula_materia,
@@ -68,7 +68,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
 });
 router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
-    var sql = "DELETE FROM `INSCRIPCION` WHERE ID_INSCRIPCION = ?";
+    var sql = "DELETE FROM `inscripcion` WHERE id_inscripcion = ?";
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)

@@ -4,7 +4,7 @@ var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
 router.get("/", mdAutenticacion.verificaToken, (req, res) => {
-    mysqlConnection.query('SELECT * FROM INSTANCIA_EVALUACION', (err, rows) => {
+    mysqlConnection.query('SELECT * FROM instancia_evaluacion', (err, rows) => {
         if (!err) {
             res.status(200).json({
                 ok: true,
@@ -22,7 +22,7 @@ router.get("/", mdAutenticacion.verificaToken, (req, res) => {
 router.post('/', mdAutenticacion.verificaToken, (req, res) => {
     var body = req.body;
 
-    var sql = "INSERT INTO `INSTANCIA_EVALUACION` SET ?";
+    var sql = "INSERT INTO `instancia_evaluacion` SET ?";
     var post = {
         nombre_instancia: body.nombre_instancia,
     };
@@ -45,7 +45,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var body = req.body;
 
-    var sql = 'UPDATE `INSTANCIA_EVALUACION` SET ? WHERE ID_INSTANCIA = "' + id + '"';
+    var sql = 'UPDATE `instancia_evaluacion` SET ? WHERE id_instancia = "' + id + '"';
     var post = {
         nombre_instancia: body.nombre_instancia
     };
@@ -67,7 +67,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
 
 router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
-    var sql = "DELETE FROM `INSTANCIA_EVALUACION` WHERE ID_INSTANCIA = ?";
+    var sql = "DELETE FROM `instancia_evaluacion` WHERE id_instancia = ?";
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)

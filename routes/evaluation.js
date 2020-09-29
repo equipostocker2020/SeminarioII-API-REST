@@ -4,7 +4,7 @@ var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
 router.get("/", mdAutenticacion.verificaToken, (req, res) => {
-    mysqlConnection.query('SELECT B.NOMBRE_MATERIA, A.FECHA, A.FINAL, C.NOMBRE_AULA FROM EVALUACION A INNER JOIN MATERIA AS B ON B.ID_MATERIA = A.ID_MATERIA INNER JOIN AULA AS C', (err, rows) => {
+    mysqlConnection.query('SELECT B.nombre_materia, A.fecha, A.final, C.nombre_aula FROM evaluacion A INNER JOIN materia AS B ON B.id_materia = A.id_materia INNER JOIN aula AS C', (err, rows) => {
         if (!err) {
             res.status(200).json({
                 ok: true,
@@ -21,10 +21,11 @@ router.get("/", mdAutenticacion.verificaToken, (req, res) => {
 router.post("/", mdAutenticacion.verificaToken, (req, res) => {
     var body = req.body;
 
-    var sql = "INSERT INTO `EVALUACION` SET ?";
+    var sql = "INSERT INTO `evaluacion` SET ?";
     var post = {
         id_materia: body.id_materia,
-        fecha: body.fecha
+        fecha: body.fecha,
+        final: body.final
     };
     mysqlConnection.query(sql, post, (err, rows) => {
         if (!err)
@@ -42,7 +43,7 @@ router.post("/", mdAutenticacion.verificaToken, (req, res) => {
 });
 router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
-    var sql = "DELETE FROM `EVALUACION` WHERE ID_EVALUACION= ?";
+    var sql = "DELETE FROM `evaluacion` WHERE id_evaluacion= ?";
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
@@ -64,10 +65,11 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var body = req.body;
 
-    var sql = 'UPDATE `EVALUACION` SET ? WHERE ID_EVALUACION = "' + id + '"';
+    var sql = 'UPDATE `evaluacion` SET ? WHERE id_evaluacion = "' + id + '"';
     var post = {
         id_materia: body.id_materia,
-        fecha: body.fecha
+        fecha: body.fecha,
+        final: body.final
     };
     mysqlConnection.query(sql, post, (err, rows) => {
         if (!err)

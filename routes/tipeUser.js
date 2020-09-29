@@ -6,7 +6,7 @@ var jwt = require("jsonwebtoken");
 var mdAutenticacion = require("../middlewares/autentication");
 
 router.get("/alumno", mdAutenticacion.verificaToken, (req, res) => {
-    var sql = 'SELECT * FROM `USUARIO` WHERE USUARIO.ROL = "estudiante"';
+    var sql = 'SELECT * FROM `usuario` WHERE usuario.rol = "estudiante"';
     console.log(sql);
     mysqlConnection.query(sql, (err, rows) => {
         console.log(sql);
@@ -25,7 +25,7 @@ router.get("/alumno", mdAutenticacion.verificaToken, (req, res) => {
     });
 });
 router.get("/docente", mdAutenticacion.verificaToken, (req, res) => {
-    var sql = 'SELECT * FROM `USUARIO` WHERE USUARIO.ROL = "docente"';
+    var sql = 'SELECT * FROM `usuario` WHERE usuario.rol = "docente"';
     console.log(sql);
     mysqlConnection.query(sql, (err, rows) => {
         console.log(sql);

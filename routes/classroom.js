@@ -4,7 +4,7 @@ var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
 router.get("/", mdAutenticacion.verificaToken, (req, res) => {
-    var sql = 'SELECT * FROM `AULA`';
+    var sql = 'SELECT * FROM `aula`';
     mysqlConnection.query(sql, (err, rows) => {
         if (!err) {
             res.status(200).json({
@@ -23,7 +23,7 @@ router.get("/", mdAutenticacion.verificaToken, (req, res) => {
 router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
 
     var id = req.params.id;
-    var sql = 'SELECT * FROM `AULA` WHERE ID_AULA = "' + id + '"';
+    var sql = 'SELECT * FROM `aula` WHERE id_aula = "' + id + '"';
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
@@ -44,7 +44,7 @@ router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
 router.post("/", mdAutenticacion.verificaToken, (req, res) => {
     var body = req.body;
 
-    var sql = "INSERT INTO `AULA` SET ?";
+    var sql = "INSERT INTO `aula` SET ?";
     var post = {
         nombre_aula: body.nombre_aula,
     };
@@ -67,7 +67,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var body = req.body;
 
-    var sql = 'UPDATE `AULA` SET ? WHERE ID_AULA = "' + id + '"';
+    var sql = 'UPDATE `aula` SET ? WHERE id_aula = "' + id + '"';
     var post = {
         nombre_aula: body.nombre_aula,
     };
@@ -89,7 +89,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
 
 router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
-    var sql = "DELETE FROM `AULA` WHERE ID_AULA= ?";
+    var sql = "DELETE FROM `aula` WHERE id_aula= ?";
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)

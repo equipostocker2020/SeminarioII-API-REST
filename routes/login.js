@@ -7,7 +7,7 @@ var SEED = require('../config/config').SEED;
 
 router.post("/", (req, res) => {
     var body = req.body;
-    var sql = 'SELECT * FROM `USUARIO` WHERE EMAIL = "' + body.email + '"';
+    var sql = 'SELECT * FROM `usuario` WHERE email = "' + body.email + '"';
 
     mysqlConnection.query(sql, (err, rows) => {
         if (!body.email) {
@@ -30,7 +30,7 @@ router.post("/", (req, res) => {
         }
         if (rows.length) {
             rows.forEach(function(row) {
-                if (!bcrypt.compareSync(body.contraseña, row.CONTRASEÑA)) {
+                if (!bcrypt.compareSync(body.contraseña, row.contraseña)) {
                     return res.status(400).json({
                         ok: false,
                         message: 'Credenciales invalidas - password',
@@ -39,8 +39,8 @@ router.post("/", (req, res) => {
                     var token = jwt.sign({ usuario: rows }, SEED, { expiresIn: 14400 });
                     res.status(200).json({
                         ok: true,
-                        email: row.EMAIL,
-                        contraseña: row.CONTRASEÑA,
+                        email: row.email,
+                        contraseña: row.contraseña,
                         token: token
                     });
                 }

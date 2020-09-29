@@ -4,7 +4,7 @@ var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
 router.get('/', mdAutenticacion.verificaToken, (req, res) => {
-    mysqlConnection.query('SELECT C.NOMBRE, C.APELLIDO, D.NOMBRE_MATERIA,E.NOMBRE_INSTANCIA, F.FECHA, G.ANHO, NOTA FROM NOTA_ALUMNO A INNER JOIN INSCRIPCION AS B ON B.ID_INSCRIPCION = A.ID_INSCRIPCION INNER JOIN USUARIO AS C ON C.ID_USUARIO = B.ID_ALUMNO INNER JOIN MATERIA AS D INNER JOIN INSTANCIA_EVALUACION AS E ON E.ID_INSTANCIA = A.ID_INSTANCIA INNER JOIN EVALUACION AS F INNER JOIN AULAS_MATERIAS AS G WHERE C.ROL = "Estudiante"', (err, rows) => {
+    mysqlConnection.query('SELECT C.nombre, C.apellid, D.nombre_materia, E.nombre_instancia, F.fecha, G.anho, NOTA FROM nota_alumno A INNER JOIN inscripcion AS B ON B.is_inscripcion = A.id_inscripcion INNER JOIN usuario AS C ON C.id_usuario = B.id_alumno INNER JOIN materia AS D INNER JOIN instancia_evaluacion AS E ON E.id_instancia = A.id_instancia INNER JOIN evaluacion AS F INNER JOIN aulas_materias AS G WHERE C.ROL = "Estudiante"', (err, rows) => {
         if (!err) {
             res.status(200).json({
                 ok: true,
@@ -21,7 +21,7 @@ router.get('/', mdAutenticacion.verificaToken, (req, res) => {
 router.post('/', mdAutenticacion.verificaToken, (req, res) => {
     var body = req.body;
 
-    var sql = "INSERT INTO `NOTA_ALUMNO` SET ?";
+    var sql = "INSERT INTO `nota_alumno` SET ?";
     var post = {
         nombre_instancia: body.nombre_instancia,
     };
@@ -44,7 +44,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var body = req.body;
 
-    var sql = 'UPDATE `NOTA_ALUMNO` SET ? WHERE NOTA = "' + id + '"';
+    var sql = 'UPDATE `nota_alumno` SET ? WHERE id_nota = "' + id + '"';
     var post = {
         nombre_instancia: body.nombre_instancia
     };
@@ -66,7 +66,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
 
 router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
-    var sql = "DELETE FROM `NOTA_ALUMNO` WHERE ID_NOTA = ?";
+    var sql = "DELETE FROM `nota_alumno` WHERE id_nota = ?";
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
