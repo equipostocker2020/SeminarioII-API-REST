@@ -27,9 +27,12 @@ router.post("/", (req, res) => {
                 ok: false,
                 message: 'Credenciales invalidas - email'
             });
-        }  
+        }
         if (rows.length) {
-            rows.forEach(function(row) {
+            rows.forEach(function(row, err) {
+                if (err) {
+                    throw new Error("oops something happened");
+                }
                 if (!bcrypt.compareSync(body.contraseña, row.contraseña)) {
                     return res.status(400).json({
                         ok: false,
@@ -39,11 +42,13 @@ router.post("/", (req, res) => {
                     var token = jwt.sign({ usuario: rows }, SEED, { expiresIn: 14400 });
                     res.status(200).json({
                         ok: true,
+                        email: row.email,
+                        id: row.id_usuario,
                         usuario: row,
-                        token: token,
-                        id:row.id_usuario
+                        token: token
                     });
                 }
+                return;
             });
         }
     });
