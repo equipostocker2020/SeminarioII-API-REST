@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-09-2020 a las 00:14:48
+-- Tiempo de generación: 30-09-2020 a las 05:29:47
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.33
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `aula` (
-  `Id_aula` int(11) NOT NULL,
+  `id_aula` int(11) NOT NULL,
   `nombre_aula` varchar(50) NOT NULL,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -37,8 +37,8 @@ CREATE TABLE `aula` (
 -- Volcado de datos para la tabla `aula`
 --
 
-INSERT INTO `aula` (`Id_aula`, `nombre_aula`, `estado`) VALUES
-(1, '2°A', ''),
+INSERT INTO `aula` (`id_aula`, `nombre_aula`, `estado`) VALUES
+(1, '2°A', 'ACTIVO'),
 (2, '2°A', 'ACTIVO');
 
 -- --------------------------------------------------------
@@ -107,8 +107,7 @@ CREATE TABLE `inscripcion` (
 
 INSERT INTO `inscripcion` (`id_inscripcion`, `id_alumno`, `id_aula_materia`, `estado`) VALUES
 (1, 2, 2, 'ACTIVO'),
-(9, NULL, 1, 'ACTIVO'),
-(11, NULL, 1, 'ACTIVO'),
+(9, 2, 1, 'ACTIVO'),
 (13, 3, 1, 'ACTIVO');
 
 -- --------------------------------------------------------
@@ -146,7 +145,7 @@ INSERT INTO `instancia_evaluacion` (`id_instancia`, `nombre_instancia`, `estado`
 --
 
 CREATE TABLE `materia` (
-  `Id_materia` int(11) NOT NULL,
+  `id_materia` int(11) NOT NULL,
   `nombre_materia` varchar(50) NOT NULL,
   `dia` varchar(10) NOT NULL,
   `horario` varchar(20) NOT NULL,
@@ -157,7 +156,7 @@ CREATE TABLE `materia` (
 -- Volcado de datos para la tabla `materia`
 --
 
-INSERT INTO `materia` (`Id_materia`, `nombre_materia`, `dia`, `horario`, `estado`) VALUES
+INSERT INTO `materia` (`id_materia`, `nombre_materia`, `dia`, `horario`, `estado`) VALUES
 (1, 'Programación22', '026-09-20T', '12:00.000Z', 'ACTIVO'),
 (2, 'Programación', '019-03-12T', '00:00.000Z', 'ACTIVO');
 
@@ -183,7 +182,6 @@ CREATE TABLE `nota_alumno` (
 
 CREATE TABLE `usuario` (
   `id_usuario` int(11) NOT NULL,
-  `determinado` varchar(50) DEFAULT NULL,
   `nombre` varchar(50) NOT NULL,
   `apellido` varchar(50) NOT NULL,
   `direccion` varchar(100) NOT NULL,
@@ -201,9 +199,10 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id_usuario`, `determinado`, `nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`) VALUES
-(2, NULL, 'Gonzalo', 'Figueras', 'Avenida Boyacá 1994, 5to 24', 'gonzalofigueras@gmail.com', '31932764', '$2a$10$R8Gvdn0p3JCJ3kl4JCkeX.zzg/rddXD8U.YpJOvmqNp/WbBR6JzVu', '23-31932764-9', 'Estudiante', '1985-12-01', '35', 'ACTIVO'),
-(3, NULL, 'Juan', 'perez', 'tu casa 123', 'gonzalofigueras1@gmail.com', '56456789', '$2a$10$O0v/WVeF1bcy.IO1BWtOl.139vIgcKnQd/xQ/qBfnKuffEVzw9kNq', '654987', 'docente', '1985-12-01', '28', 'ACTIVO');
+INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`) VALUES
+(2, 'Gonzalo', 'Figueras', 'Avenida Boyacá 1994, 5to 24', 'gonzalofigueras@gmail.com', '31932764', '$2a$10$R8Gvdn0p3JCJ3kl4JCkeX.zzg/rddXD8U.YpJOvmqNp/WbBR6JzVu', '23-31932764-9', 'Estudiante', '1985-12-01', '35', 'ACTIVO'),
+(3, 'Juan', 'perez', 'tu casa 123', 'gonzalofigueras1@gmail.com', '56456789', '$2a$10$O0v/WVeF1bcy.IO1BWtOl.139vIgcKnQd/xQ/qBfnKuffEVzw9kNq', '654987', 'docente', '1985-12-01', '28', 'ACTIVO'),
+(5, 'Agustin', 'Galarza', 'Avenida Boyacá 1994, 5to 24', 'gonzalofigueras@gmail.com', '319327641', '$2a$10$R8Gvdn0p3JCJ3kl4JCkeX.zzg/rddXD8U.YpJOvmqNp/WbBR6JzVu', '23-31932764-91', 'Estudiante', '1985-12-01', '35', 'ACTIVO');
 
 --
 -- Índices para tablas volcadas
@@ -213,7 +212,7 @@ INSERT INTO `usuario` (`id_usuario`, `determinado`, `nombre`, `apellido`, `direc
 -- Indices de la tabla `aula`
 --
 ALTER TABLE `aula`
-  ADD PRIMARY KEY (`Id_aula`);
+  ADD PRIMARY KEY (`id_aula`);
 
 --
 -- Indices de la tabla `aulas_materias`
@@ -252,7 +251,7 @@ ALTER TABLE `instancia_evaluacion`
 -- Indices de la tabla `materia`
 --
 ALTER TABLE `materia`
-  ADD PRIMARY KEY (`Id_materia`);
+  ADD PRIMARY KEY (`id_materia`);
 
 --
 -- Indices de la tabla `nota_alumno`
@@ -278,7 +277,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `aula`
 --
 ALTER TABLE `aula`
-  MODIFY `Id_aula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_aula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `aulas_materias`
@@ -308,7 +307,7 @@ ALTER TABLE `instancia_evaluacion`
 -- AUTO_INCREMENT de la tabla `materia`
 --
 ALTER TABLE `materia`
-  MODIFY `Id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `nota_alumno`
@@ -320,7 +319,7 @@ ALTER TABLE `nota_alumno`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

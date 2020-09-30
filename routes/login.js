@@ -41,7 +41,8 @@ router.post("/", (req, res) => {
                         ok: true,
                         usuario: body,
                         email: row.email,
-                        contraseña: row.contraseña,
+                        id: row.id_usuario,
+                        usuario: row,
                         token: token
                     });
                 }
