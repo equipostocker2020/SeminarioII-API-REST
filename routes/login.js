@@ -39,11 +39,9 @@ router.post("/", (req, res) => {
                     var token = jwt.sign({ usuario: rows }, SEED, { expiresIn: 14400 });
                     res.status(200).json({
                         ok: true,
-                        usuario: body,
-                        email: row.email,
-                        id: row.id_usuario,
                         usuario: row,
-                        token: token
+                        token: token,
+                        id:row.id_usuario
                     });
                 }
             });
