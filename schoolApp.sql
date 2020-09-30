@@ -2,10 +2,10 @@
 -- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 30-09-2020 a las 05:29:47
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.2.33
+-- Servidor: localhost
+-- Tiempo de generación: 30-09-2020 a las 17:05:27
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,7 +39,7 @@ CREATE TABLE `aula` (
 
 INSERT INTO `aula` (`id_aula`, `nombre_aula`, `estado`) VALUES
 (1, '2°A', 'ACTIVO'),
-(2, '2°A', 'ACTIVO');
+(2, '1°B', 'ACTIVO');
 
 -- --------------------------------------------------------
 
@@ -62,7 +62,6 @@ CREATE TABLE `aulas_materias` (
 --
 
 INSERT INTO `aulas_materias` (`Id_aula`, `id_materia`, `anho`, `id_rel`, `id_instancia`, `id_docente`, `estado`) VALUES
-(1, 1, '2021', 1, NULL, 3, 'ACTIVO'),
 (2, 2, '2021', 2, 2, 3, 'ACTIVO');
 
 -- --------------------------------------------------------
@@ -157,8 +156,8 @@ CREATE TABLE `materia` (
 --
 
 INSERT INTO `materia` (`id_materia`, `nombre_materia`, `dia`, `horario`, `estado`) VALUES
-(1, 'Programación22', '026-09-20T', '12:00.000Z', 'ACTIVO'),
-(2, 'Programación', '019-03-12T', '00:00.000Z', 'ACTIVO');
+(1, 'Programación22', 'martes', '12:00', 'ACTIVO'),
+(2, 'Seminario', 'Jueves', '18.30', 'ACTIVO');
 
 -- --------------------------------------------------------
 
@@ -189,20 +188,11 @@ CREATE TABLE `usuario` (
   `dni` varchar(10) NOT NULL,
   `contraseña` varchar(255) NOT NULL,
   `cuit_cuil` varchar(15) NOT NULL,
-  `rol` varchar(10) NOT NULL,
+  `rol` varchar(10) NOT NULL DEFAULT 'Estudiante',
   `fecha_nac` date NOT NULL,
   `edad` varchar(3) NOT NULL,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `usuario`
---
-
-INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`) VALUES
-(2, 'Gonzalo', 'Figueras', 'Avenida Boyacá 1994, 5to 24', 'gonzalofigueras@gmail.com', '31932764', '$2a$10$R8Gvdn0p3JCJ3kl4JCkeX.zzg/rddXD8U.YpJOvmqNp/WbBR6JzVu', '23-31932764-9', 'Estudiante', '1985-12-01', '35', 'ACTIVO'),
-(3, 'Juan', 'perez', 'tu casa 123', 'gonzalofigueras1@gmail.com', '56456789', '$2a$10$O0v/WVeF1bcy.IO1BWtOl.139vIgcKnQd/xQ/qBfnKuffEVzw9kNq', '654987', 'docente', '1985-12-01', '28', 'ACTIVO'),
-(5, 'Agustin', 'Galarza', 'Avenida Boyacá 1994, 5to 24', 'gonzalofigueras@gmail.com', '319327641', '$2a$10$R8Gvdn0p3JCJ3kl4JCkeX.zzg/rddXD8U.YpJOvmqNp/WbBR6JzVu', '23-31932764-91', 'Estudiante', '1985-12-01', '35', 'ACTIVO');
 
 --
 -- Índices para tablas volcadas
@@ -267,7 +257,10 @@ ALTER TABLE `nota_alumno`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id_usuario`);
+  ADD PRIMARY KEY (`id_usuario`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `dni` (`dni`),
+  ADD UNIQUE KEY `cuit_cuil` (`cuit_cuil`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -319,7 +312,7 @@ ALTER TABLE `nota_alumno`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
