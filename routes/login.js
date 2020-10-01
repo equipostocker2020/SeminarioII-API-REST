@@ -13,19 +13,19 @@ router.post("/", (req, res) => {
         if (!body.email) {
             res.status(400).json({
                 ok: false,
-                message: 'Request mal formulada, debe ingresar Mail para obtener TOKEN'
+                error: 'Request mal formulada, debe ingresar Mail para obtener TOKEN'
             });
         }
         if (!body.contraseña) {
             res.status(400).json({
                 ok: false,
-                message: 'Request mal formulada, debe ingresar Password para obtener TOKEN'
+                error: 'Request mal formulada, debe ingresar Password para obtener TOKEN'
             });
         }
         if (rows == 0) {
             res.status(400).json({
                 ok: false,
-                message: 'Credenciales invalidas - email'
+                error: 'Credenciales invalidas - email'
             });
         }
         if (rows.length) {
@@ -36,7 +36,7 @@ router.post("/", (req, res) => {
                 if (!bcrypt.compareSync(body.contraseña, row.contraseña)) {
                     return res.status(400).json({
                         ok: false,
-                        message: 'Credenciales invalidas - password',
+                        error: 'Credenciales invalidas - password',
                     });
                 } else {
                     var token = jwt.sign({ usuario: rows }, SEED, { expiresIn: 14400 });

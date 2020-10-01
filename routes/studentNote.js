@@ -8,12 +8,12 @@ router.get('/', mdAutenticacion.verificaToken, (req, res) => {
         if (!err) {
             res.status(200).json({
                 ok: true,
-                usuario: rows,
+                nota_alumno: rows,
             });
         } else {
             return res.status(500).json({
                 ok: false,
-                errors: err,
+                error: err,
             });
         }
     });
@@ -29,12 +29,12 @@ router.post('/', mdAutenticacion.verificaToken, (req, res) => {
         if (!err)
             res.status(201).json({
                 ok: true,
-                usuario: post
+                nota_alumno: post
             });
         else {
             return res.status(400).json({
                 ok: false,
-                errors: err,
+                error: err,
             });
         }
     });
@@ -53,12 +53,12 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
         if (!err)
             res.status(200).json({
                 ok: true,
-                aula: post
+                nota_alumno: post
             });
         else {
             return res.status(400).json({
                 ok: false,
-                errors: err,
+                error: err,
             });
         }
     });
@@ -78,7 +78,7 @@ router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
             } else {
                 res.status(200).json({
                     ok: true,
-                    aula: "Se ha borrado el Registro que corresponde al ID:" + id
+                    nota_alumno: "Se ha borrado el Registro que corresponde al ID:" + id
                 });
             }
     });

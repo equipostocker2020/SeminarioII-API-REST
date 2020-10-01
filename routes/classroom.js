@@ -14,7 +14,7 @@ router.get("/", mdAutenticacion.verificaToken, (req, res) => {
         } else {
             return res.status(500).json({
                 ok: false,
-                errors: err,
+                error: err,
             });
         }
     });
@@ -57,7 +57,7 @@ router.post("/", mdAutenticacion.verificaToken, (req, res) => {
         else {
             return res.status(400).json({
                 ok: false,
-                errors: err,
+                error: err,
             });
         }
     });
@@ -81,7 +81,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
         else {
             return res.status(400).json({
                 ok: false,
-                errors: err,
+                error: err,
             });
         }
     });
