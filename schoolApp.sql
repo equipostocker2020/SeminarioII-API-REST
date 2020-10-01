@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 30-09-2020 a las 17:05:27
--- Versión del servidor: 10.4.11-MariaDB
--- Versión de PHP: 7.4.6
+-- Tiempo de generación: 01-10-2020 a las 15:12:30
+-- Versión del servidor: 10.4.14-MariaDB
+-- Versión de PHP: 7.2.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,14 +33,6 @@ CREATE TABLE `aula` (
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `aula`
---
-
-INSERT INTO `aula` (`id_aula`, `nombre_aula`, `estado`) VALUES
-(1, '2°A', 'ACTIVO'),
-(2, '1°B', 'ACTIVO');
-
 -- --------------------------------------------------------
 
 --
@@ -57,13 +49,6 @@ CREATE TABLE `aulas_materias` (
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `aulas_materias`
---
-
-INSERT INTO `aulas_materias` (`Id_aula`, `id_materia`, `anho`, `id_rel`, `id_instancia`, `id_docente`, `estado`) VALUES
-(2, 2, '2021', 2, 2, 3, 'ACTIVO');
-
 -- --------------------------------------------------------
 
 --
@@ -78,15 +63,6 @@ CREATE TABLE `evaluacion` (
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `evaluacion`
---
-
-INSERT INTO `evaluacion` (`id_evaluacion`, `id_materia`, `fecha`, `final`, `estado`) VALUES
-(1, 1, '2020-09-02', 0, 'ACTIVO'),
-(2, 1, '2020-09-02', 0, 'ACTIVO'),
-(3, 1, '2020-09-02', 1, 'ACTIVO');
-
 -- --------------------------------------------------------
 
 --
@@ -100,15 +76,6 @@ CREATE TABLE `inscripcion` (
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `inscripcion`
---
-
-INSERT INTO `inscripcion` (`id_inscripcion`, `id_alumno`, `id_aula_materia`, `estado`) VALUES
-(1, 2, 2, 'ACTIVO'),
-(9, 2, 1, 'ACTIVO'),
-(13, 3, 1, 'ACTIVO');
-
 -- --------------------------------------------------------
 
 --
@@ -120,22 +87,6 @@ CREATE TABLE `instancia_evaluacion` (
   `nombre_instancia` varchar(255) NOT NULL,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `instancia_evaluacion`
---
-
-INSERT INTO `instancia_evaluacion` (`id_instancia`, `nombre_instancia`, `estado`) VALUES
-(1, 'Primer Parcial 22', 'ACTIVO'),
-(2, 'Segundo Parcial', 'ACTIVO'),
-(3, 'Primer Final Febrero', 'ACTIVO'),
-(4, 'Segundo Final Febrero', 'ACTIVO'),
-(5, 'Primer Final Julio', 'ACTIVO'),
-(6, 'Segundo Final Julio', 'ACTIVO'),
-(7, 'Primer final Diciembre', 'ACTIVO'),
-(8, 'Segundo Final Diciembre', 'ACTIVO'),
-(9, 'Prueba PUT', 'ACTIVO'),
-(10, 'Primer Parcial', 'ACTIVO');
 
 -- --------------------------------------------------------
 
@@ -150,14 +101,6 @@ CREATE TABLE `materia` (
   `horario` varchar(20) NOT NULL,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Volcado de datos para la tabla `materia`
---
-
-INSERT INTO `materia` (`id_materia`, `nombre_materia`, `dia`, `horario`, `estado`) VALUES
-(1, 'Programación22', 'martes', '12:00', 'ACTIVO'),
-(2, 'Seminario', 'Jueves', '18.30', 'ACTIVO');
 
 -- --------------------------------------------------------
 
@@ -188,7 +131,7 @@ CREATE TABLE `usuario` (
   `dni` varchar(10) NOT NULL,
   `contraseña` varchar(255) NOT NULL,
   `cuit_cuil` varchar(15) NOT NULL,
-  `rol` varchar(10) NOT NULL DEFAULT 'Estudiante',
+  `rol` varchar(11) NOT NULL,
   `fecha_nac` date NOT NULL,
   `edad` varchar(3) NOT NULL,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
@@ -270,37 +213,37 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `aula`
 --
 ALTER TABLE `aula`
-  MODIFY `id_aula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_aula` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `aulas_materias`
 --
 ALTER TABLE `aulas_materias`
-  MODIFY `id_rel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_rel` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `evaluacion`
 --
 ALTER TABLE `evaluacion`
-  MODIFY `id_evaluacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_evaluacion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `instancia_evaluacion`
 --
 ALTER TABLE `instancia_evaluacion`
-  MODIFY `id_instancia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_instancia` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `materia`
 --
 ALTER TABLE `materia`
-  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `nota_alumno`
@@ -312,7 +255,7 @@ ALTER TABLE `nota_alumno`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
