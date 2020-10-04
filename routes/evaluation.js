@@ -4,7 +4,7 @@ var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
 router.get("/", mdAutenticacion.verificaToken, (req, res) => {
-    mysqlConnection.query('SELECT B.nombre_materia, A.fecha, A.final, A.id_evaluacion, A.estado, C.nombre_aula FROM evaluacion A INNER JOIN materia AS B ON B.id_materia = A.id_materia INNER JOIN aula AS C', (err, rows) => {
+    mysqlConnection.query('SELECT B.nombre_materia, A.fecha, A.id_evaluacion, A.estado, C.nombre_instancia FROM evaluacion A INNER JOIN materia AS B ON B.id_materia = A.id_materia INNER JOIN instancia_evaluacion as C ON A.id_instancia = C.id_instancia', (err, rows) => {
         if (!err) {
             res.status(200).json({
                 ok: true,
@@ -24,8 +24,8 @@ router.post("/", mdAutenticacion.verificaToken, (req, res) => {
     var sql = "INSERT INTO `evaluacion` SET ?";
     var post = {
         id_materia: body.id_materia,
-        fecha: body.fecha,
-        final: body.final
+        id_instancia: body.id_instancia,
+        fecha: body.fecha
     };
     mysqlConnection.query(sql, post, (err, rows) => {
         if (!err)
@@ -68,8 +68,8 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var sql = 'UPDATE `evaluacion` SET ? WHERE id_evaluacion = "' + id + '"';
     var post = {
         id_materia: body.id_materia,
-        fecha: body.fecha,
-        final: body.final
+        id_instancia: body.id_instancia,
+        fecha: body.fecha
     };
     mysqlConnection.query(sql, post, (err, rows) => {
         if (!err)
