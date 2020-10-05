@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 01-10-2020 a las 15:12:30
+-- Tiempo de generación: 05-10-2020 a las 18:49:32
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.33
 
@@ -58,8 +58,8 @@ CREATE TABLE `aulas_materias` (
 CREATE TABLE `evaluacion` (
   `id_evaluacion` int(11) NOT NULL,
   `id_materia` int(11) DEFAULT NULL,
+  `id_instancia` int(11) NOT NULL,
   `fecha` date NOT NULL,
-  `final` tinyint(1) NOT NULL DEFAULT 0,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -193,7 +193,6 @@ ALTER TABLE `nota_alumno`
   ADD PRIMARY KEY (`id_nota`),
   ADD UNIQUE KEY `UNICA` (`id_inscripcion`,`id_instancia`),
   ADD KEY `IXFK_NOTA_ALUMNO_INSCRIPCION` (`id_inscripcion`),
-  ADD KEY `IXFK_NOTA_ALUMNO_INSCRIPCION_02` (`id_inscripcion`),
   ADD KEY `IXFK_NOTA_ALUMNO_INSTANCIA_EVALUACION` (`id_instancia`);
 
 --
