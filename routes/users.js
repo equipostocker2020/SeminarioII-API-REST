@@ -45,34 +45,54 @@ router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
 });
 // crear un usuario
 router.post('/', (req, res) => {
-    var body = req.body;
 
-    var sql = "INSERT INTO `usuario` SET ?";
-    var post = {
-        nombre: body.nombre,
-        apellido: body.apellido,
-        direccion: body.direccion,
-        email: body.email,
-        dni: body.dni,
-        contraseña: bcrypt.hashSync(body.contraseña, 10),
-        cuit_cuil: body.cuit_cuil,
-        rol: body.rol,
-        fecha_nac: body.fecha_nac,
-        edad: body.edad,
-    };
-    mysqlConnection.query(sql, post, (err, rows) => {
-        if (!err)
-            res.status(201).json({
-                ok: true,
-                usuario: post
-            });
-        else {
-            return res.status(400).json({
-                ok: false,
-                error: err,
+    mysqlConnection.query('SELECT * FROM `usuario`', (err, rows) => {
+        if (!err) {
+            var body = req.body;
+            var sql = "INSERT INTO `usuario` SET ?";
+            if (rows.length == 0) {
+                var post = {
+                    nombre: body.nombre,
+                    apellido: body.apellido,
+                    direccion: body.direccion,
+                    email: body.email,
+                    dni: body.dni,
+                    contraseña: bcrypt.hashSync(body.contraseña, 10),
+                    cuit_cuil: body.cuit_cuil,
+                    rol: "ADMIN",
+                    fecha_nac: body.fecha_nac,
+                    edad: body.edad,
+                };
+            } else {
+                var post = {
+                    nombre: body.nombre,
+                    apellido: body.apellido,
+                    direccion: body.direccion,
+                    email: body.email,
+                    dni: body.dni,
+                    contraseña: bcrypt.hashSync(body.contraseña, 10),
+                    cuit_cuil: body.cuit_cuil,
+                    rol: body.rol,
+                    fecha_nac: body.fecha_nac,
+                    edad: body.edad,
+                };
+            };
+            mysqlConnection.query(sql, post, (err, rows) => {
+                if (!err)
+                    res.status(201).json({
+                        ok: true,
+                        usuario: post
+                    });
+                else {
+                    return res.status(400).json({
+                        ok: false,
+                        error: err,
+                    });
+                }
             });
         }
     });
+
 });
 //elimina un usuario
 router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
