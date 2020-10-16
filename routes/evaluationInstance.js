@@ -3,8 +3,16 @@ var router = express.Router();
 var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
+const SELECT = 'SELECT * FROM instancia_evaluacion';
+const INSERT = 'INSERT INTO `instancia_evaluacion` SET ?';
+const UPDATE = 'UPDATE `instancia_evaluacion` SET ? WHERE id_instancia = "';
+const DELETE = 'DELETE FROM `instancia_evaluacion` WHERE id_instancia = ?';
+
+// reglas de negocio : Admin y docente crea actualiza y borrra
+
+
 router.get("/", mdAutenticacion.verificaToken, (req, res) => {
-    mysqlConnection.query('SELECT * FROM instancia_evaluacion', (err, rows) => {
+    mysqlConnection.query(SELECT, (err, rows) => {
         if (!err) {
             res.status(200).json({
                 ok: true,
@@ -21,11 +29,11 @@ router.get("/", mdAutenticacion.verificaToken, (req, res) => {
 
 router.post('/', mdAutenticacion.verificaToken, (req, res) => {
     var body = req.body;
-
-    var sql = "INSERT INTO `instancia_evaluacion` SET ?";
+    var sql = INSERT;
     var post = {
         nombre_instancia: body.nombre_instancia,
     };
+
     mysqlConnection.query(sql, post, (err, rows) => {
         if (!err)
             res.status(201).json({
@@ -44,12 +52,11 @@ router.post('/', mdAutenticacion.verificaToken, (req, res) => {
 router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var body = req.body;
-
-    var sql = 'UPDATE `instancia_evaluacion` SET ? WHERE id_instancia = "' + id + '"';
+    var sql = UPDATE + id + '"';
     var post = {
         nombre_instancia: body.nombre_instancia
     };
-    console.log(post);
+
     mysqlConnection.query(sql, post, (err, rows) => {
         if (!err)
             res.status(200).json({
@@ -67,7 +74,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
 
 router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
-    var sql = "DELETE FROM `instancia_evaluacion` WHERE id_instancia = ?";
+    var sql = DELETE;
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)

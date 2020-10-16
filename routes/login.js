@@ -5,9 +5,11 @@ var jwt = require('jsonwebtoken');
 var mysqlConnection = require('../config/db.config');
 var SEED = require('../config/config').SEED;
 
+const SELECT = 'SELECT * FROM `usuario` WHERE email = "';
+
 router.post("/", (req, res) => {
     var body = req.body;
-    var sql = 'SELECT * FROM `usuario` WHERE email = "' + body.email + '"';
+    var sql = SELECT + body.email + '"';
 
     mysqlConnection.query(sql, (err, rows) => {
         if (!body.email) {
@@ -31,7 +33,7 @@ router.post("/", (req, res) => {
         if (rows.length) {
             rows.forEach(function(row, err) {
                 if (err) {
-                    throw new Error("oops something happened");
+                    throw new Error("Error inesperado...");
                 }
                 if (!bcrypt.compareSync(body.contraseña, row.contraseña)) {
                     return res.status(400).json({

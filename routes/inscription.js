@@ -3,8 +3,16 @@ var router = express.Router();
 var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
+const SELECT = 'SELECT id_inscripcion, A.nombre, A.apellido, C.nombre_aula, D.nombre_materia, D.dia, D.horario, B.anho FROM inscripcion INNER JOIN usuario AS A ON A.id_usuario = inscripcion.id_alumno INNER JOIN aulas_materias AS B ON B.id_rel = inscripcion.id_aula_materia INNER JOIN aula AS C ON C.id_aula = B.id_aula INNER JOIN materia AS D ON D.id_materia = B.id_materia WHERE A.rol = "Estudiante"';
+const INSERT = 'INSERT INTO `inscripcion` SET ?';
+const UPDATE = 'UPDATE `inscripcion` SET ? WHERE id_inscripcion = "';
+const DELETE = 'DELETE FROM `inscripcion` WHERE id_inscripcion = ?';
+
+// reglas de negocio : Admin y alumno crea actualiza y borrra
+
+
 router.get('/', mdAutenticacion.verificaToken, (req, res) => {
-    mysqlConnection.query('SELECT id_inscripcion, A.nombre, A.apellido, C.nombre_aula, D.nombre_materia, D.dia, D.horario, B.anho FROM inscripcion INNER JOIN usuario AS A ON A.id_usuario = inscripcion.id_alumno INNER JOIN aulas_materias AS B ON B.id_rel = inscripcion.id_aula_materia INNER JOIN aula AS C ON C.id_aula = B.id_aula INNER JOIN materia AS D ON D.id_materia = B.id_materia WHERE A.rol = "Estudiante"', (err, rows) => {
+    mysqlConnection.query(SELECT, (err, rows) => {
         if (!err) {
             res.status(200).json({
                 ok: true,
@@ -21,12 +29,12 @@ router.get('/', mdAutenticacion.verificaToken, (req, res) => {
 
 router.post('/', mdAutenticacion.verificaToken, (req, res) => {
     var body = req.body;
-
-    var sql = "INSERT INTO `inscripcion` SET ?";
+    var sql = INSERT;
     var post = {
         id_alumno: body.id_alumno,
         id_aula_materia: body.id_aula_materia,
     };
+
     mysqlConnection.query(sql, post, (err, rows) => {
         if (!err)
             res.status(201).json({
@@ -45,13 +53,12 @@ router.post('/', mdAutenticacion.verificaToken, (req, res) => {
 router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var body = req.body;
-
-    var sql = 'UPDATE `inscripcion` SET ? WHERE id_inscripcion = "' + id + '"';
+    var sql = UPDATE + id + '"';
     var post = {
         id_alumno: body.id_alumno,
         id_aula_materia: body.id_aula_materia,
     };
-    console.log(post);
+
     mysqlConnection.query(sql, post, (err, rows) => {
         if (!err)
             res.status(200).json({
@@ -66,9 +73,10 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
         }
     });
 });
+
 router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
-    var sql = "DELETE FROM `inscripcion` WHERE id_inscripcion = ?";
+    var sql = DELETE;
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)

@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var mysqlConnection = require('../config/db.config');
-var bcrypt = require("bcryptjs");
-var jwt = require("jsonwebtoken");
 var mdAutenticacion = require("../middlewares/autentication");
 
+const SELECT_ALUMNO = 'SELECT * FROM `usuario` WHERE usuario.rol = "estudiante"';
+const SELECT_DOCENTE = 'SELECT * FROM `usuario` WHERE usuario.rol = "docente"';
+
 router.get("/alumno", mdAutenticacion.verificaToken, (req, res) => {
-    var sql = 'SELECT * FROM `usuario` WHERE usuario.rol = "estudiante"';
-    console.log(sql);
+    var sql = SELECT_ALUMNO;
+
     mysqlConnection.query(sql, (err, rows) => {
         console.log(sql);
         if (!err)
@@ -24,9 +25,10 @@ router.get("/alumno", mdAutenticacion.verificaToken, (req, res) => {
             }
     });
 });
+
 router.get("/docente", mdAutenticacion.verificaToken, (req, res) => {
-    var sql = 'SELECT * FROM `usuario` WHERE usuario.rol = "docente"';
-    console.log(sql);
+    var sql = SELECT_DOCENTE;
+
     mysqlConnection.query(sql, (err, rows) => {
         console.log(sql);
         if (!err)

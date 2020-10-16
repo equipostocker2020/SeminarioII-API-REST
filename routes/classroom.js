@@ -2,9 +2,19 @@ var express = require('express');
 var router = express.Router();
 var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
+var getCollections = require("../middlewares/getCollections");
+
+const SELECT_AULA = 'SELECT * FROM `aula`';
+const SELECT_AULA_BY_ID = 'SELECT * FROM `aula` WHERE id_aula = "';
+const INSERT_AULA = "INSERT INTO `aula` SET ?";
+const UPDATE_AULA = 'UPDATE `aula` SET ? WHERE id_aula = "';
+const DELETE_AULA = 'DELETE FROM `aula` WHERE id_aula= ?';
+
+// reglas de negocio : Admin crea actualiza y borrra
+
 
 router.get("/", mdAutenticacion.verificaToken, (req, res) => {
-    var sql = 'SELECT * FROM `aula`';
+    var sql = SELECT_AULA;
     mysqlConnection.query(sql, (err, rows) => {
         if (!err) {
             res.status(200).json({
@@ -21,9 +31,8 @@ router.get("/", mdAutenticacion.verificaToken, (req, res) => {
 });
 
 router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
-
     var id = req.params.id;
-    var sql = 'SELECT * FROM `aula` WHERE id_aula = "' + id + '"';
+    var sql = SELECT_AULA_BY_ID + id + '"';
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
@@ -41,13 +50,13 @@ router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
     });
 });
 
-router.post("/", mdAutenticacion.verificaToken, (req, res) => {
+router.post("/", getCollections.getUsuario, mdAutenticacion.verificaToken, (req, res) => {
     var body = req.body;
-
-    var sql = "INSERT INTO `aula` SET ?";
+    var sql = INSERT_AULA;
     var post = {
         nombre_aula: body.nombre_aula,
     };
+
     mysqlConnection.query(sql, post, (err, rows) => {
         if (!err)
             res.status(201).json({
@@ -63,15 +72,14 @@ router.post("/", mdAutenticacion.verificaToken, (req, res) => {
     });
 });
 
-router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
+router.put("/:id", getCollections.getUsuario, mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var body = req.body;
-
-    var sql = 'UPDATE `aula` SET ? WHERE id_aula = "' + id + '"';
+    var sql = UPDATE_AULA + id + '"';
     var post = {
         nombre_aula: body.nombre_aula,
     };
-    console.log(post);
+
     mysqlConnection.query(sql, post, (err, rows) => {
         if (!err)
             res.status(200).json({
@@ -87,9 +95,9 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     });
 });
 
-router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
+router.delete("/:id", getCollections.getUsuario, mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
-    var sql = "DELETE FROM `aula` WHERE id_aula= ?";
+    var sql = DELETE_AULA;
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
@@ -106,6 +114,5 @@ router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
             }
     });
 });
-
 
 module.exports = router;

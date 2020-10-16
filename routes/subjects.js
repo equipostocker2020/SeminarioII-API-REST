@@ -3,8 +3,17 @@ var router = express.Router();
 var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
+const SELECT = 'SELECT * FROM `materia`';
+const SELECT_BY_ID = 'SELECT * FROM `materia` WHERE id_materia = "';
+const INSERT = 'INSERT INTO `materia` SET ?';
+const UPDATE = 'UPDATE `materia` SET ? WHERE id_materia = "';
+const DELETE = 'DELETE FROM `materia` WHERE id_materia= ?';
+
+// reglas de negocio : Admin crea actualiza y borrra
+
+
 router.get("/", mdAutenticacion.verificaToken, (req, res) => {
-    var sql = 'SELECT * FROM `materia`';
+    var sql = SELECT;
     mysqlConnection.query(sql, (err, rows) => {
         if (!err) {
             res.status(200).json({
@@ -21,9 +30,8 @@ router.get("/", mdAutenticacion.verificaToken, (req, res) => {
 });
 
 router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
-
     var id = req.params.id;
-    var sql = 'SELECT * FROM `materia` WHERE id_materia = "' + id + '"';
+    var sql = SELECT_BY_ID + id + '"';
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
@@ -43,13 +51,13 @@ router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
 
 router.post("/", mdAutenticacion.verificaToken, (req, res) => {
     var body = req.body;
-
-    var sql = "INSERT INTO `materia` SET ?";
+    var sql = INSERT;
     var post = {
         nombre_materia: body.nombre_materia,
         dia: body.dia,
         horario: body.horario
     };
+
     mysqlConnection.query(sql, post, (err, rows) => {
         if (!err)
             res.status(201).json({
@@ -68,14 +76,13 @@ router.post("/", mdAutenticacion.verificaToken, (req, res) => {
 router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var body = req.body;
-
-    var sql = 'UPDATE `materia` SET ? WHERE id_materia = "' + id + '"';
+    var sql = UPDATE + id + '"';
     var post = {
         nombre_materia: body.nombre_materia,
         dia: body.dia,
         horario: body.horario,
     };
-    console.log(post);
+
     mysqlConnection.query(sql, post, (err, rows) => {
         if (!err)
             res.status(200).json({
@@ -93,7 +100,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
 
 router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
-    var sql = "DELETE FROM `materia` WHERE id_materia= ?";
+    var sql = DELETE;
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
@@ -110,6 +117,5 @@ router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
             }
     });
 });
-
 
 module.exports = router;

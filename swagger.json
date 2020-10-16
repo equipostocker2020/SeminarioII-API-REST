@@ -1,0 +1,173 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "SchoolApp",
+        "description": "ApiRest Para Seminario II",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "tags": [{
+        "name": "Usuarios",
+        "description": "API para usuarios"
+    }],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/usuario/": {
+            "post": {
+                "tags": [
+                    "Usuario"
+                ],
+                "description": "Crea un nuevo usuario en el sistema",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Se crea un usuario",
+                        "schema": {
+                            "$ref": "#/definitions/Usuario"
+                        }
+                    }
+                }
+            }
+        },
+        "/usuario": {
+            "get": {
+                "tags": [
+                    "Usuario"
+                ],
+                "summary": "Get all users in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Usuario"
+                        }
+                    }
+                }
+            }
+        },
+        "/usuario/{id}": {
+            "parameters": [{
+                "name": "id",
+                "in": "path",
+                "required": true,
+                "description": "ID del usuario a buscar",
+                "type": "integer"
+            }],
+            "delete": {
+                "summary": "Borra usuario por ID",
+                "tags": [
+                    "Usuario"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Usuario borrado",
+                        "schema": {
+                            "$ref": "#/definitions/Usuario"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update usuario por ID",
+                "tags": [
+                    "Usuario"
+                ],
+                "parameters": [{
+                    "name": "user",
+                    "in": "body",
+                    "description": "User with new values of properties",
+                    "schema": {
+                        "$ref": "#/definitions/updateUser"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "User es Actualizado",
+                        "schema": {
+                            "$ref": "#/definitions/Usuario"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Usuario": {
+            "required": [
+                "id_usuario",
+                "nombre",
+                "apellido",
+                "direccion",
+                "email",
+                "dni",
+                "contraseña",
+                "cuit_cuil",
+                "rol",
+                "fecha_nac",
+                "edad",
+                "estado"
+            ],
+            "properties": {
+                "id_usuario": {
+                    "type": "integer",
+                    "uniqueItems": true
+                },
+                "nombre": {
+                    "type": "string"
+                },
+                "apellido": {
+                    "type": "string"
+                },
+                "direccion": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "dni": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "contraseña": {
+                    "type": "string"
+                },
+                "cuit_cuil": {
+                    "type": "string",
+                    "uniqueItems": true
+                },
+                "rol": {
+                    "type": "string"
+                },
+                "fecha_nac": {
+                    "type": "string"
+                },
+                "edad": {
+                    "type": "integer"
+                },
+                "estado": {
+                    "type": "string"
+                }
+            }
+        },
+        "Usuarios": {
+            "type": "array",
+            "$ref": "#/definitions/Usuario"
+        }
+    }
+}

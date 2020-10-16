@@ -2,13 +2,16 @@ var express = require('express');
 var router = express.Router();
 var mysqlConnection = require('../config/db.config');
 var bcrypt = require("bcryptjs");
-var jwt = require("jsonwebtoken");
 var mdAutenticacion = require("../middlewares/autentication");
 
+const SELECT = 'SELECT * FROM `usuario`';
+const SELECT_BY_ID = 'SELECT * FROM `usuario` WHERE id_usuario = "';
+const INSERT = 'INSERT INTO `usuario` SET ?';
+const DELETE = 'DELETE FROM `usuario` WHERE id_usuario= ?';
+const UPDATE = 'UPDATE `usuario` SET ? WHERE id_usuario = "';
 
-// obtener usuarios
 router.get('/', (req, res) => {
-    mysqlConnection.query('SELECT * FROM `usuario`', (err, rows) => {
+    mysqlConnection.query(SELECT, (err, rows) => {
         if (!err) {
             res.status(200).json({
                 ok: true,
@@ -22,11 +25,10 @@ router.get('/', (req, res) => {
         }
     });
 });
-//obtener usuarios por id
-router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
 
+router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
-    var sql = 'SELECT * FROM `usuario` WHERE id_usuario = "' + id + '"';
+    var sql = SELECT_BY_ID + id + '"';
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
@@ -43,13 +45,13 @@ router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
             }
     });
 });
-// crear un usuario
+
 router.post('/', (req, res) => {
 
-    mysqlConnection.query('SELECT * FROM `usuario`', (err, rows) => {
+    mysqlConnection.query(SELECT, (err, rows) => {
         if (!err) {
             var body = req.body;
-            var sql = "INSERT INTO `usuario` SET ?";
+            var sql = INSERT;
             if (rows.length == 0) {
                 var post = {
                     nombre: body.nombre,
@@ -59,7 +61,7 @@ router.post('/', (req, res) => {
                     dni: body.dni,
                     contraseña: bcrypt.hashSync(body.contraseña, 10),
                     cuit_cuil: body.cuit_cuil,
-                    rol: "ADMIN",
+                    rol: 'ADMIN',
                     fecha_nac: body.fecha_nac,
                     edad: body.edad,
                 };
@@ -77,6 +79,7 @@ router.post('/', (req, res) => {
                     edad: body.edad,
                 };
             };
+
             mysqlConnection.query(sql, post, (err, rows) => {
                 if (!err)
                     res.status(201).json({
@@ -94,10 +97,10 @@ router.post('/', (req, res) => {
     });
 
 });
-//elimina un usuario
+
 router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
-    var sql = "DELETE FROM `usuario` WHERE id_usuario= ?";
+    var sql = DELETE;
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
@@ -114,13 +117,11 @@ router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
             }
     });
 });
-// actualiza un usuario.
-router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
 
+router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var body = req.body;
-
-    var sql = 'UPDATE `usuario` SET ? WHERE id_usuario = "' + id + '"';
+    var sql = UPDATE + id + '"';
     var post = {
         nombre: body.nombre,
         apellido: body.apellido,
@@ -133,6 +134,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
         fecha_nac: body.fecha_nac,
         edad: body.edad,
     };
+
     mysqlConnection.query(sql, post, (err, rows) => {
         if (!err)
             res.status(200).json({
@@ -147,6 +149,5 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
         }
     });
 });
-
 
 module.exports = router;
