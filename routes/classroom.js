@@ -59,7 +59,7 @@ router.post("/", getCollections.getUsuario, mdAutenticacion.verificaToken, (req,
 
     mysqlConnection.query(sql, post, (err, rows) => {
         if (!err)
-            res.status(201).json({
+            return res.status(201).json({
                 ok: true,
                 aula: post
             });
