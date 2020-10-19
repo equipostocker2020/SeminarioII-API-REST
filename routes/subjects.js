@@ -8,6 +8,7 @@ const SELECT_BY_ID = 'SELECT * FROM `materia` WHERE id_materia = "';
 const INSERT = 'INSERT INTO `materia` SET ?';
 const UPDATE = 'UPDATE `materia` SET ? WHERE id_materia = "';
 const DELETE = 'DELETE FROM `materia` WHERE id_materia= ?';
+const SELECT_INSCRIPTOS = 'select c.nombre,c.apellido,c.dni,c.email,d.nombre_materia,d.dia,d.horario,b.anho from inscripcion as a inner join aulas_materias as b on a.id_aula_materia = b.id_rel inner join usuario as c on a.id_alumno = c.id_usuario inner join materia as d on b.id_materia = d.id_materia where a.id_alumno = ?';
 
 // reglas de negocio : Admin crea actualiza y borrra
 
@@ -31,6 +32,26 @@ router.get("/", mdAutenticacion.verificaToken, (req, res) => {
 router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var sql = SELECT_BY_ID + id + '"';
+
+    mysqlConnection.query(sql, [id], (err, rows) => {
+        if (!err)
+            if (rows == 0) {
+                res.status(400).json({
+                    ok: false,
+                    error: 'No existen registros para este ID: ' + id
+                });
+            } else {
+                res.status(200).json({
+                    ok: true,
+                    materia: rows
+                });
+            }
+    });
+});
+
+router.get("/inscriptos/:id", mdAutenticacion.verificaToken, (req, res) => {
+    var id = req.params.id;
+    var sql = SELECT_INSCRIPTOS + id + '"';
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
