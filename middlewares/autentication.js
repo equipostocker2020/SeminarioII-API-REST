@@ -22,7 +22,7 @@ exports.verificaToken = function(req, res, next) {
 
 exports.getUsuario = function(req, res, next) {
     var idUsuario = req.query.idUsuario;
-    mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', idUsuario, (err, rows) => {
+    mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', (err, rows) => {
         if (!err) {
             if (!idUsuario) {
                 return res.status(400).json({

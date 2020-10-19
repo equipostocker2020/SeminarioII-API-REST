@@ -2,7 +2,7 @@ var mysqlConnection = require('../config/db.config');
 
 const SELECT_BY_ID = 'SELECT * FROM `usuario` WHERE id_usuario = "';
 
-exports.getUsuario = function(req, res, next) {
+exports.getUsuario = (req, res, next) => {
     var idUsuario = req.query.idUsuario;
     mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', (err, rows) => {
         if (err) {
@@ -37,3 +37,28 @@ exports.getUsuario = function(req, res, next) {
     });
     next();
 }
+
+// exports.getUsuario = new Promise((req, res, next) => {
+//     var idUsuario = req.query.idUsuario;
+//     mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', (err, rows) => {
+//         if (err) {
+//             reject(res.send(err));
+//         } else if (!idUsuario) {
+//             reject(res.send("No se envio ID usuario"));
+//         }
+//         if (rows.length) {
+//             rows.forEach(function(row, err) {
+//                 if (err) {
+//                     reject(res.send(err));
+//                 }
+//                 if (!row.rol == "Estudiante" || row.rol == "Docente") {
+//                     reject(res.send('Usuario no tiene privilegios para esta accion.'));
+//                 } else {
+//                     resolve(res.send('Usuario con permisos.'));
+//                 }
+//             });
+//         }
+//         next();
+//         return;
+//     });
+// });

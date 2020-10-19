@@ -11,7 +11,6 @@ const DELETE = 'DELETE FROM `materia` WHERE id_materia= ?';
 
 // reglas de negocio : Admin crea actualiza y borrra
 
-
 router.get("/", mdAutenticacion.verificaToken, (req, res) => {
     var sql = SELECT;
     mysqlConnection.query(sql, (err, rows) => {

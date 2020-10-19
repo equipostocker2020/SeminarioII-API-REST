@@ -10,7 +10,6 @@ const DELETE = 'DELETE FROM `aulas_materias` WHERE ID_REL = ?';
 
 
 // reglas de negocio : Admin crea actualiza y borrra
-
 router.get("/", mdAutenticacion.verificaToken, (req, res) => {
     mysqlConnection.query(SELECT, (err, rows) => {
         if (!err) {
