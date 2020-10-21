@@ -4,6 +4,7 @@ var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
 const SELECT = 'SELECT id_inscripcion, A.nombre, A.apellido, C.nombre_aula, D.nombre_materia, D.dia, D.horario, B.anho FROM inscripcion INNER JOIN usuario AS A ON A.id_usuario = inscripcion.id_alumno INNER JOIN aulas_materias AS B ON B.id_rel = inscripcion.id_aula_materia INNER JOIN aula AS C ON C.id_aula = B.id_aula INNER JOIN materia AS D ON D.id_materia = B.id_materia WHERE A.rol = "Estudiante"';
+const SELECT_INSCRIPCION_BY_ID = 'SELECT * FROM inscripcion WHERE id_inscripcion = "';
 const INSERT = 'INSERT INTO `inscripcion` SET ?';
 const UPDATE = 'UPDATE `inscripcion` SET ? WHERE id_inscripcion = "';
 const DELETE = 'DELETE FROM `inscripcion` WHERE id_inscripcion = ?';
@@ -26,16 +27,30 @@ router.get('/', mdAutenticacion.verificaToken, (req, res) => {
     });
 });
 
+router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
+    var id = req.params.id;
+    var sql = SELECT_INSCRIPCION_BY_ID + id + '"';
+
+    mysqlConnection.query(sql, [id], (err, rows) => {
+        if (!err)
+            if (rows == 0) {
+                res.status(400).json({
+                    ok: false,
+                    error: 'No existen registros para este ID: ' + id
+                });
+            } else {
+                res.status(200).json({
+                    ok: true,
+                    aula: rows
+                });
+            }
+    });
+});
+
 router.post('/', mdAutenticacion.verificaToken, (req, res) => {
     var idUsuario = req.query.idUsuario;
 
     mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', (err, rows) => {
-        if (rows == 0) {
-            return res.status(400).json({
-                ok: false,
-                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
-            });
-        }
         if (err) {
             return res.status(500).json({
                 ok: false,
@@ -45,6 +60,11 @@ router.post('/', mdAutenticacion.verificaToken, (req, res) => {
             return res.status(400).json({
                 ok: false,
                 error: "No se envio ID usuario"
+            });
+        } else if (rows == 0) {
+            return res.status(400).json({
+                ok: false,
+                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
             });
         }
         if (rows.length) {
@@ -88,12 +108,6 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var idUsuario = req.query.idUsuario;
 
     mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', (err, rows) => {
-        if (rows == 0) {
-            return res.status(400).json({
-                ok: false,
-                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
-            });
-        }
         if (err) {
             return res.status(500).json({
                 ok: false,
@@ -103,6 +117,11 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
             return res.status(400).json({
                 ok: false,
                 error: "No se envio ID usuario"
+            });
+        } else if (rows == 0) {
+            return res.status(400).json({
+                ok: false,
+                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
             });
         }
         if (rows.length) {
@@ -147,12 +166,6 @@ router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var idUsuario = req.query.idUsuario;
 
     mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', (err, rows) => {
-        if (rows == 0) {
-            return res.status(400).json({
-                ok: false,
-                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
-            });
-        }
         if (err) {
             return res.status(500).json({
                 ok: false,
@@ -162,6 +175,11 @@ router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
             return res.status(400).json({
                 ok: false,
                 error: "No se envio ID usuario"
+            });
+        } else if (rows == 0) {
+            return res.status(400).json({
+                ok: false,
+                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
             });
         }
         if (rows.length) {
@@ -197,7 +215,5 @@ router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
         }
     });
 });
-
-// ESTA SELECT ES PARA SEGUIR MAÑANA SELECT A.NOMBRE, A.APELLIDO,B.NOMBRE_AULA,C.NOMBRE_MATERIA FROM AULAS_MATERIAS INNER JOIN USUARIO AS A ON A.ID_USUARIO = AULAS_MATERIAS.ID_DOCENTE INNER JOIN AULA AS B ON B.ID_AULA=AULAS_MATERIAS.ID_AULA INNER JOIN MATERIA AS C ON C.ID_MATERIA=AULAS_MATERIAS.ID_MATERIA
 
 module.exports = router;

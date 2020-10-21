@@ -5,7 +5,7 @@ var mdAutenticacion = require("../middlewares/autentication");
 
 const SELECT = 'SELECT * FROM `materia`';
 const SELECT_BY_ID = 'SELECT * FROM `usuario` WHERE id_usuario = "';
-//const SELECT_BY_ID = 'SELECT * FROM `materia` WHERE id_materia = "';
+const SELECT_MATERIA_BY_ID = 'SELECT * FROM `materia` WHERE id_materia = "';
 const INSERT = 'INSERT INTO `materia` SET ?';
 const UPDATE = 'UPDATE `materia` SET ? WHERE id_materia = "';
 const DELETE = 'DELETE FROM `materia` WHERE id_materia= ?';
@@ -32,7 +32,7 @@ router.get("/", mdAutenticacion.verificaToken, (req, res) => {
 
 router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
-    var sql = SELECT_BY_ID + id + '"';
+    var sql = SELECT_MATERIA_BY_ID + id + '"';
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
@@ -85,10 +85,15 @@ router.post("/", mdAutenticacion.verificaToken, (req, res) => {
                 ok: false,
                 error: "No se envio ID usuario"
             });
+        } else if (rows == 0) {
+            return res.status(400).json({
+                ok: false,
+                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
+            });
         }
         if (rows.length) {
             //itero el resultado de la peticion sql
-            rows.forEach(function (row, err){
+            rows.forEach(function(row, err) {
                 if (err) {
                     throw new Error(err);
                 }
@@ -140,9 +145,14 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
                 ok: false,
                 error: "No se envio ID usuario"
             });
+        } else if (rows == 0) {
+            return res.status(400).json({
+                ok: false,
+                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
+            });
         }
         if (rows.length) {
-            rows.forEach(function (row, err) {
+            rows.forEach(function(row, err) {
                 if (err) {
                     throw new Error(err);
                 }
@@ -193,9 +203,14 @@ router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
                 ok: false,
                 error: "No se envio ID usuario"
             });
+        } else if (rows == 0) {
+            return res.status(400).json({
+                ok: false,
+                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
+            });
         }
         if (rows.length) {
-            rows.forEach(function (row, err) {
+            rows.forEach(function(row, err) {
                 if (err) {
                     throw new Error(err);
                 }

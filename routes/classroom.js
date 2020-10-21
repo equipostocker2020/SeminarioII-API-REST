@@ -54,12 +54,6 @@ router.post("/", mdAutenticacion.verificaToken, (req, res) => {
     var idUsuario = req.query.idUsuario;
     // con el id enviado traigo el registro desde la bd.
     mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', (err, rows) => {
-        if (rows == 0) {
-            return res.status(400).json({
-                ok: false,
-                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
-            });
-        }
         if (err) {
             return res.status(500).json({
                 ok: false,
@@ -69,6 +63,11 @@ router.post("/", mdAutenticacion.verificaToken, (req, res) => {
             return res.status(400).json({
                 ok: false,
                 error: "No se envio ID usuario"
+            });
+        } else if (rows == 0) {
+            return res.status(400).json({
+                ok: false,
+                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
             });
         }
         if (rows.length) {
@@ -113,12 +112,6 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var idUsuario = req.query.idUsuario;
 
     mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', (err, rows) => {
-        if (rows == 0) {
-            return res.status(400).json({
-                ok: false,
-                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
-            });
-        }
         if (err) {
             return res.status(500).json({
                 ok: false,
@@ -128,6 +121,11 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
             return res.status(400).json({
                 ok: false,
                 error: "No se envio ID usuario"
+            });
+        } else if (rows == 0) {
+            return res.status(400).json({
+                ok: false,
+                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
             });
         }
         if (rows.length) {
@@ -171,12 +169,6 @@ router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var idUsuario = req.query.idUsuario;
 
     mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', (err, rows) => {
-        if (rows == 0) {
-            return res.status(400).json({
-                ok: false,
-                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
-            });
-        }
         if (err) {
             return res.status(500).json({
                 ok: false,
@@ -186,6 +178,11 @@ router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
             return res.status(400).json({
                 ok: false,
                 error: "No se envio ID usuario"
+            });
+        } else if (rows == 0) {
+            return res.status(400).json({
+                ok: false,
+                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
             });
         }
         if (rows.length) {

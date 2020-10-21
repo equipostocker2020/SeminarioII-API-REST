@@ -4,15 +4,14 @@ var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
 //const SELECT = 'SELECT C.nombre, C.apellido, D.nombre_materia, E.nombre_instancia, F.fecha, G.anho, NOTA FROM nota_alumno A INNER JOIN inscripcion AS B ON B.id_inscripcion = A.id_inscripcion INNER JOIN usuario AS C ON C.id_usuario = B.id_alumno INNER JOIN materia AS D INNER JOIN instancia_evaluacion AS E ON E.id_instancia = A.id_instancia INNER JOIN evaluacion AS F INNER JOIN aulas_materias AS G WHERE C.ROL = "ESTUDIANTE"';
-const SELECT ='SELECT * FROM `nota_alumno`';
+const SELECT = 'SELECT * FROM `nota_alumno`';
+const SELECT_NOTA_ALUMNO_BY_ID = 'SELECT * FROM nota_alumno WHERE id_nota ="';
 const INSERT = 'INSERT INTO `nota_alumno` SET ?';
 const UPDATE = 'UPDATE `nota_alumno` SET ? WHERE id_nota = "';
 const DELETE = 'DELETE FROM `nota_alumno` WHERE id_nota = ?';
 const SELECT_BY_ID = 'SELECT * FROM `usuario` WHERE id_usuario = "';
 
 // reglas de negocio : Admin, docente crea actualiza y borrra
-
-
 router.get('/', mdAutenticacion.verificaToken, (req, res) => {
     mysqlConnection.query(SELECT, (err, rows) => {
         if (!err) {
@@ -26,6 +25,26 @@ router.get('/', mdAutenticacion.verificaToken, (req, res) => {
                 error: err,
             });
         }
+    });
+});
+
+router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
+    var id = req.params.id;
+    var sql = SELECT_NOTA_ALUMNO_BY_ID + id + '"';
+
+    mysqlConnection.query(sql, [id], (err, rows) => {
+        if (!err)
+            if (rows == 0) {
+                res.status(400).json({
+                    ok: false,
+                    error: 'No existen registros para este ID: ' + id
+                });
+            } else {
+                res.status(200).json({
+                    ok: true,
+                    aula: rows
+                });
+            }
     });
 });
 
@@ -44,10 +63,15 @@ router.post('/', mdAutenticacion.verificaToken, (req, res) => {
                 ok: false,
                 error: "No se envio ID usuario"
             });
+        } else if (rows == 0) {
+            return res.status(400).json({
+                ok: false,
+                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
+            });
         }
         if (rows.length) {
             //itero el resultado de la peticion sql
-            rows.forEach(function (row, err) {
+            rows.forEach(function(row, err) {
                 if (err) {
                     throw new Error(err);
                 }
@@ -99,9 +123,14 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
                 ok: false,
                 error: "No se envio ID usuario"
             });
+        } else if (rows == 0) {
+            return res.status(400).json({
+                ok: false,
+                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
+            });
         }
         if (rows.length) {
-            rows.forEach(function (row, err) {
+            rows.forEach(function(row, err) {
                 if (err) {
                     throw new Error(err);
                 }
@@ -152,9 +181,14 @@ router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
                 ok: false,
                 error: "No se envio ID usuario"
             });
+        } else if (rows == 0) {
+            return res.status(400).json({
+                ok: false,
+                error: "El id enviado no corresponde a un usuario registrado: " + idUsuario
+            });
         }
         if (rows.length) {
-            rows.forEach(function (row, err) {
+            rows.forEach(function(row, err) {
                 if (err) {
                     throw new Error(err);
                 }
