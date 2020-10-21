@@ -11,7 +11,6 @@ const UPDATE = 'UPDATE `nota_alumno` SET ? WHERE id_nota = "';
 const DELETE = 'DELETE FROM `nota_alumno` WHERE id_nota = ?';
 const SELECT_BY_ID = 'SELECT * FROM `usuario` WHERE id_usuario = "';
 
-// reglas de negocio : Admin, docente crea actualiza y borrra
 router.get('/', mdAutenticacion.verificaToken, (req, res) => {
     mysqlConnection.query(SELECT, (err, rows) => {
         if (!err) {
@@ -49,9 +48,8 @@ router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
 });
 
 router.post('/', mdAutenticacion.verificaToken, (req, res) => {
-    //enviando id por params 
     var idUsuario = req.query.idUsuario;
-    // con el id enviado traigo el registro desde la bd.
+
     mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', (err, rows) => {
         if (err) {
             return res.status(500).json({
@@ -70,18 +68,15 @@ router.post('/', mdAutenticacion.verificaToken, (req, res) => {
             });
         }
         if (rows.length) {
-            //itero el resultado de la peticion sql
             rows.forEach(function(row, err) {
                 if (err) {
                     throw new Error(err);
                 }
-                //valido rol del registro para manejar logica pensada ...
                 if (row.rol == "ESTUDIANTE") {
                     return res.status(400).json({
                         ok: false,
                         error: "Usuario sin privelegios para esta accion"
                     });
-                    // pasando la validacion, sigo con flujo normal
                 } else {
                     var body = req.body;
                     var sql = INSERT;
@@ -192,7 +187,6 @@ router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
                 if (err) {
                     throw new Error(err);
                 }
-                // prueba de los fields modificar strings
                 if (row.rol == "ESTUDIANTE") {
                     return res.status(400).json({
                         ok: false,

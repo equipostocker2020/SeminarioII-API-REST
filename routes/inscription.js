@@ -72,7 +72,7 @@ router.post('/', mdAutenticacion.verificaToken, (req, res) => {
                 if (err) {
                     throw new Error(err);
                 }
-                if (!row.rol == "ADMIN" || !row.rol == "ALUMNO") {
+                if (row.rol == "DOCENTE") {
                     return res.status(400).json({
                         ok: false,
                         error: "Usuario sin privelegios para esta accion"
@@ -129,7 +129,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
                 if (err) {
                     throw new Error(err);
                 }
-                if (!row.rol == "ADMIN" || !row.rol == "ALUMNO") {
+                if (row.rol == "DOCENTE") {
                     return res.status(400).json({
                         ok: false,
                         error: "Usuario sin privelegios para esta accion"
@@ -187,7 +187,7 @@ router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
                 if (err) {
                     throw new Error(err);
                 }
-                if (!row.rol == "ADMIN" || !row.rol == "ALUMNO") {
+                if (row.rol == "DOCENTE") {
                     return res.status(400).json({
                         ok: false,
                         error: "Usuario sin privelegios para esta accion"
