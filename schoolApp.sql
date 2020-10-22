@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 05-10-2020 a las 18:49:32
+-- Tiempo de generación: 23-10-2020 a las 01:10:46
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.33
 
@@ -44,7 +44,6 @@ CREATE TABLE `aulas_materias` (
   `id_materia` int(11) NOT NULL,
   `anho` varchar(50) NOT NULL,
   `id_rel` int(11) NOT NULL,
-  `id_instancia` int(11) DEFAULT NULL,
   `id_docente` int(11) DEFAULT NULL,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -155,7 +154,6 @@ ALTER TABLE `aulas_materias`
   ADD UNIQUE KEY `unique` (`anho`,`id_materia`,`Id_aula`),
   ADD KEY `IXFK_AULAS_MATERIAS_AULA` (`Id_aula`),
   ADD KEY `IXFK_AULAS_MATERIAS_DOCENTE` (`id_docente`),
-  ADD KEY `IXFK_AULAS_MATERIAS_INSTANCIA_EVALUACION` (`id_instancia`),
   ADD KEY `IXFK_AULAS_MATERIAS_MATERIA` (`id_materia`);
 
 --

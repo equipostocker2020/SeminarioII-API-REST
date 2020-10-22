@@ -84,7 +84,6 @@ router.post("/", mdAutenticacion.verificaToken, (req, res) => {
                         id_aula: body.id_aula,
                         id_materia: body.id_materia,
                         anho: body.anho,
-                        id_instancia: body.id_instancia,
                         id_docente: body.id_docente,
                     };
 
@@ -145,7 +144,6 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
                         id_aula: body.id_aula,
                         id_materia: body.id_materia,
                         anho: body.anho,
-                        id_instancia: body.id_instancia,
                         id_docente: body.id_docente,
                     };
 
