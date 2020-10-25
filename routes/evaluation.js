@@ -198,7 +198,8 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
                     var post = {
                         id_materia: body.id_materia,
                         id_instancia: body.id_instancia,
-                        fecha: body.fecha
+                        fecha: body.fecha,
+                        estado: body.estado
                     };
 
                     mysqlConnection.query(sql, post, (err, rows) => {

@@ -133,6 +133,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
         rol: body.rol,
         fecha_nac: body.fecha_nac,
         edad: body.edad,
+        estado: body.estado,
     };
 
     mysqlConnection.query(sql, post, (err, rows) => {

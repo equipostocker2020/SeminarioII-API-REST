@@ -144,6 +144,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
                     var sql = UPDATE_AULA + id + '"';
                     var post = {
                         nombre_aula: body.nombre_aula,
+                        estado: body.estado,
                     };
 
                     mysqlConnection.query(sql, post, (err, rows) => {

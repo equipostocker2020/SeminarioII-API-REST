@@ -163,6 +163,7 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
                         nombre_materia: body.nombre_materia,
                         dia: body.dia,
                         horario: body.horario,
+                        estado: body.estado,
                     };
 
                     mysqlConnection.query(sql, post, (err, rows) => {
