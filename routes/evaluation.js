@@ -3,7 +3,7 @@ var router = express.Router();
 var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
-const SELECT = 'SELECT B.nombre_materia, A.fecha, A.id_evaluacion, A.estado, C.nombre_instancia FROM evaluacion A INNER JOIN materia AS B ON B.id_materia = A.id_materia INNER JOIN instancia_evaluacion as C ON A.id_instancia = C.id_instancia';
+const SELECT = 'SELECT B.nombre_materia, A.fecha, A.id_evaluacion, A.estado, C.nombre_instancia, B.id_materia, C.id_instancia FROM evaluacion A INNER JOIN materia AS B ON B.id_materia = A.id_materia INNER JOIN instancia_evaluacion as C ON A.id_instancia = C.id_instancia';
 const SELECT_EVALUACION_BY_ID = 'SELECT * FROM evaluacion where id_evaluacion = "';
 const INSERT = 'INSERT INTO `evaluacion` SET ?';
 const DELETE = 'DELETE FROM `evaluacion` WHERE id_evaluacion= ?';
