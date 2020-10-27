@@ -3,7 +3,7 @@ var router = express.Router();
 var mysqlConnection = require('../config/db.config');
 var mdAutenticacion = require("../middlewares/autentication");
 
-const SELECT = 'SELECT id_inscripcion, A.nombre, A.apellido, C.nombre_aula, D.nombre_materia, D.dia, D.horario, B.anho FROM inscripcion INNER JOIN usuario AS A ON A.id_usuario = inscripcion.id_alumno INNER JOIN aulas_materias AS B ON B.id_rel = inscripcion.id_aula_materia INNER JOIN aula AS C ON C.id_aula = B.id_aula INNER JOIN materia AS D ON D.id_materia = B.id_materia WHERE A.rol = "Estudiante"';
+const SELECT = 'SELECT id_alumno id_inscripcion, A.nombre, A.apellido, C.nombre_aula, D.nombre_materia, D.id_rel, D.dia, D.horario, B.anho FROM inscripcion INNER JOIN usuario AS A ON A.id_usuario = inscripcion.id_alumno INNER JOIN aulas_materias AS B ON B.id_rel = inscripcion.id_aula_materia INNER JOIN aula AS C ON C.id_aula = B.id_aula INNER JOIN materia AS D ON D.id_materia = B.id_materia WHERE A.rol = "Estudiante"';
 const SELECT_INSCRIPCION_BY_ID = 'SELECT * FROM inscripcion WHERE id_inscripcion = "';
 const INSERT = 'INSERT INTO `inscripcion` SET ?';
 const UPDATE = 'UPDATE `inscripcion` SET ? WHERE id_inscripcion = "';
