@@ -196,7 +196,7 @@ ALTER TABLE `aulas_materias`
  ADD INDEX `IXFK_aulas_materias_materia` (`id_materia` ASC)
 ;
 
-ALTER TABLE `Evaluacion` 
+ALTER TABLE `evaluacion` 
  ADD INDEX `IXFK_evaluacion_materia` (`id_materia` ASC)
 ;
 
