@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-10-2020 a las 01:29:28
+-- Tiempo de generación: 28-10-2020 a las 15:16:57
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -33,6 +33,14 @@ CREATE TABLE `aula` (
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `aula`
+--
+
+INSERT INTO `aula` (`id_aula`, `nombre_aula`, `estado`) VALUES
+(1, 'La conferencia de la lora2', 'ACTIVO'),
+(2, 'qweraswerfaswerwe', 'ACTIVO');
+
 -- --------------------------------------------------------
 
 --
@@ -48,6 +56,14 @@ CREATE TABLE `aulas_materias` (
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `aulas_materias`
+--
+
+INSERT INTO `aulas_materias` (`Id_aula`, `id_materia`, `anho`, `id_rel`, `id_docente`, `estado`) VALUES
+(1, 1, '2020', 8, 3, 'ACTIVO'),
+(2, 2, '2020', 9, 3, 'ACTIVO');
+
 -- --------------------------------------------------------
 
 --
@@ -56,11 +72,20 @@ CREATE TABLE `aulas_materias` (
 
 CREATE TABLE `evaluacion` (
   `id_evaluacion` int(11) NOT NULL,
-  `id_materia` int(11) DEFAULT NULL,
+  `id_materia` int(11) NOT NULL,
   `id_instancia` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `evaluacion`
+--
+
+INSERT INTO `evaluacion` (`id_evaluacion`, `id_materia`, `id_instancia`, `fecha`, `estado`) VALUES
+(13, 1, 1, '0000-00-00', 'ACTIVO'),
+(14, 1, 2, '2020-10-30', 'ACTIVO'),
+(15, 3, 1, '2020-10-28', 'ACTIVO');
 
 -- --------------------------------------------------------
 
@@ -75,6 +100,16 @@ CREATE TABLE `inscripcion` (
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `inscripcion`
+--
+
+INSERT INTO `inscripcion` (`id_inscripcion`, `id_alumno`, `id_aula_materia`, `estado`) VALUES
+(8, 2, 8, 'ACTIVO'),
+(10, 2, 9, 'ACTIVO'),
+(13, 4, 8, 'ACTIVO'),
+(14, 4, 9, 'ACTIVO');
+
 -- --------------------------------------------------------
 
 --
@@ -86,6 +121,14 @@ CREATE TABLE `instancia_evaluacion` (
   `nombre_instancia` varchar(255) NOT NULL,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `instancia_evaluacion`
+--
+
+INSERT INTO `instancia_evaluacion` (`id_instancia`, `nombre_instancia`, `estado`) VALUES
+(1, 'Primer Parcial', 'ACTIVO'),
+(2, 'Segundo Parcial', 'ACTIVO');
 
 -- --------------------------------------------------------
 
@@ -100,6 +143,15 @@ CREATE TABLE `materia` (
   `horario` varchar(20) NOT NULL,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `materia`
+--
+
+INSERT INTO `materia` (`id_materia`, `nombre_materia`, `dia`, `horario`, `estado`) VALUES
+(1, 'Materia de mierda3', 'Miercoles', '18:30', 'ACTIVO'),
+(2, 'ahdsdsadasdsadsa', 'Miercoles', '18:30', 'ACTIVO'),
+(3, 'Tu vieja', 'Jueves', '18:30', 'ACTIVO');
 
 -- --------------------------------------------------------
 
@@ -135,6 +187,16 @@ CREATE TABLE `usuario` (
   `edad` varchar(3) NOT NULL,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id_usuario`, `nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`) VALUES
+(1, 'Gonzalo', 'Figueras', 'Biarritz 2584', 'gonzalofigueras@gmail.com', '31932764', '$2a$10$HP5oI64hlKXCqNc7IxGqFe53z.3R0z/oIZIt/c59gR2fM1LUGAm9O', '23319327649', 'ADMIN', '1985-12-01', '34', 'ACTIVO'),
+(2, 'Malena', 'Sayag', 'Biarrtiz 2584', 'malenasayag@gmail.com', '33837054', '$2a$10$fLNBUWEKdeBcwqycZrZJzezJzOYqlBk99HLGGJjJCoZwCtZbNJAsC', '27338370542', 'ESTUDIANTE', '0000-00-00', '32', 'ACTIVO'),
+(3, 'Oliverio', 'Figueras', 'Biarritz 2584', 'oliveriofigueras@gmail.com', '56668681', '$2a$10$eTQvVefd8AtYkOfjtk5aFe0qW25eThgevGzCioYSu8c.RpriT6sJe', '23566686819', 'DOCENTE', '0000-00-00', '2', 'ACTIVO'),
+(4, 'Juan', 'Perez', 'su casa', 'gonzalofigueras@gmail.com.ar', '32654987', '$2a$10$y2.02nKNRwLUZ8UhRmlaeOw3iIHEQcdflI5j1uI5Umb5cyK.6Vt72', '12456789329', 'ESTUDIANTE', '2000-10-10', '20', 'ACTIVO');
 
 --
 -- Índices para tablas volcadas
@@ -210,37 +272,37 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `aula`
 --
 ALTER TABLE `aula`
-  MODIFY `id_aula` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_aula` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `aulas_materias`
 --
 ALTER TABLE `aulas_materias`
-  MODIFY `id_rel` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_rel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `evaluacion`
 --
 ALTER TABLE `evaluacion`
-  MODIFY `id_evaluacion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_evaluacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `instancia_evaluacion`
 --
 ALTER TABLE `instancia_evaluacion`
-  MODIFY `id_instancia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_instancia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `materia`
 --
 ALTER TABLE `materia`
-  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `nota_alumno`
@@ -252,7 +314,7 @@ ALTER TABLE `nota_alumno`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
