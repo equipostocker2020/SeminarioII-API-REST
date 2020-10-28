@@ -66,7 +66,7 @@ CREATE TABLE `evaluacion`
 	`id_instancia` INT(11) NOT NULL,
 	`fecha` DATE NOT NULL,
 	`estado` VARCHAR(10) NOT NULL DEFAULT 'ACTIVO',
-	CONSTRAINT `PK_Evaluacion` PRIMARY KEY (`id_evaluacion` ASC)
+	CONSTRAINT `PK_evaluacion` PRIMARY KEY (`id_evaluacion` ASC)
 )
 
 ;
@@ -131,6 +131,52 @@ CREATE TABLE `nota_alumno` (
 )
 
 ;
+
+
+ALTER TABLE `aula`
+  MODIFY `id_aula` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `aulas_materias`
+--
+ALTER TABLE `aulas_materias`
+  MODIFY `id_rel` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `evaluacion`
+--
+ALTER TABLE `evaluacion`
+  MODIFY `id_evaluacion` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `inscripcion`
+--
+ALTER TABLE `inscripcion`
+  MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `instancia_evaluacion`
+--
+ALTER TABLE `instancia_evaluacion`
+  MODIFY `id_instancia` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `materia`
+--
+ALTER TABLE `materia`
+  MODIFY `id_materia` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `nota_alumno`
+--
+ALTER TABLE `nota_alumno`
+  MODIFY `id_nota` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
 
 /* Create Primary Keys, Indexes, Uniques, Checks */
 
@@ -225,3 +271,5 @@ ALTER TABLE `nota_alumno`
 
 SET FOREIGN_KEY_CHECKS=1 
 ;
+
+ Commit;
