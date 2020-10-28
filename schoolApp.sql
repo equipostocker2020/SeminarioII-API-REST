@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-10-2020 a las 15:18:40
+-- Tiempo de generación: 28-10-2020 a las 15:32:51
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -33,6 +33,10 @@ CREATE TABLE `aula` (
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- RELACIONES PARA LA TABLA `aula`:
+--
+
 -- --------------------------------------------------------
 
 --
@@ -48,6 +52,16 @@ CREATE TABLE `aulas_materias` (
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- RELACIONES PARA LA TABLA `aulas_materias`:
+--   `Id_aula`
+--       `aula` -> `id_aula`
+--   `id_docente`
+--       `usuario` -> `id_usuario`
+--   `id_materia`
+--       `materia` -> `id_materia`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -62,6 +76,14 @@ CREATE TABLE `evaluacion` (
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- RELACIONES PARA LA TABLA `evaluacion`:
+--   `id_instancia`
+--       `instancia_evaluacion` -> `id_instancia`
+--   `id_materia`
+--       `materia` -> `id_materia`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -75,6 +97,14 @@ CREATE TABLE `inscripcion` (
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- RELACIONES PARA LA TABLA `inscripcion`:
+--   `id_alumno`
+--       `usuario` -> `id_usuario`
+--   `id_aula_materia`
+--       `aulas_materias` -> `id_rel`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -86,6 +116,10 @@ CREATE TABLE `instancia_evaluacion` (
   `nombre_instancia` varchar(255) NOT NULL,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- RELACIONES PARA LA TABLA `instancia_evaluacion`:
+--
 
 -- --------------------------------------------------------
 
@@ -101,6 +135,10 @@ CREATE TABLE `materia` (
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- RELACIONES PARA LA TABLA `materia`:
+--
+
 -- --------------------------------------------------------
 
 --
@@ -114,6 +152,14 @@ CREATE TABLE `nota_alumno` (
   `nota` varchar(50) DEFAULT NULL,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- RELACIONES PARA LA TABLA `nota_alumno`:
+--   `id_inscripcion`
+--       `inscripcion` -> `id_inscripcion`
+--   `id_instancia`
+--       `instancia_evaluacion` -> `id_instancia`
+--
 
 -- --------------------------------------------------------
 
@@ -135,6 +181,10 @@ CREATE TABLE `usuario` (
   `edad` varchar(3) NOT NULL,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- RELACIONES PARA LA TABLA `usuario`:
+--
 
 --
 -- Índices para tablas volcadas
