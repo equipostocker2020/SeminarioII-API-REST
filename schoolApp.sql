@@ -303,6 +303,52 @@ ALTER TABLE `nota_alumno`
 --
 ALTER TABLE `usuario`
   MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+
+/* Create Foreign Key Constraints */
+
+
+ALTER TABLE `aulas_materias` 
+ ADD CONSTRAINT `FK_aulas_materias_Aula`
+	FOREIGN KEY (`id_aula`) REFERENCES `Aula` (`id_aula`) ON DELETE Restrict ON UPDATE Restrict
+;
+
+ALTER TABLE `aulas_materias` 
+ ADD CONSTRAINT `FK_aulas_materias_instancia_evaluacion`
+	FOREIGN KEY (`id_instancia`) REFERENCES `instancia_evaluacion` (`id_instancia`) ON DELETE Restrict ON UPDATE Restrict
+;
+
+ALTER TABLE `aulas_materias` 
+ ADD CONSTRAINT `FK_aulas_materias_Materia`
+	FOREIGN KEY (`id_materia`) REFERENCES `Materia` (`id_materia`) ON DELETE Restrict ON UPDATE Restrict
+;
+
+ALTER TABLE `Evaluacion` 
+ ADD CONSTRAINT `FK_Evaluacion_Materia`
+	FOREIGN KEY (`id_materia`) REFERENCES `Materia` (`id_materia`) ON DELETE Restrict ON UPDATE Restrict
+;
+
+ALTER TABLE `inscripcion` 
+ ADD CONSTRAINT `FK_inscripcion_alumnos`
+	FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id_usuario`) ON DELETE Restrict ON UPDATE Restrict
+;
+
+ALTER TABLE `inscripcion` 
+ ADD CONSTRAINT `FK_inscripcion_aulas_materias`
+	FOREIGN KEY (`id_aula_materia`) REFERENCES `aulas_materias` (`id_rel`) ON DELETE Restrict ON UPDATE Restrict
+;
+
+
+ALTER TABLE `nota_alumno` 
+ ADD CONSTRAINT `FK_nota_alumno_inscripcion`
+	FOREIGN KEY (`id_inscripcion`) REFERENCES `inscripcion` (`id_inscripcion`) ON DELETE Restrict ON UPDATE Restrict
+;
+
+ALTER TABLE `nota_alumno` 
+ ADD CONSTRAINT `FK_nota_alumno_instancia_evaluacion`
+	FOREIGN KEY (`id_instancia`) REFERENCES `instancia_evaluacion` (`id_instancia`) ON DELETE Restrict ON UPDATE Restrict
+;
+
+SET FOREIGN_KEY_CHECKS=1 
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
