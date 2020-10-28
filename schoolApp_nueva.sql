@@ -200,6 +200,10 @@ ALTER TABLE `evaluacion`
  ADD INDEX `IXFK_evaluacion_materia` (`id_materia` ASC)
 ;
 
+ALTER TABLE `evaluacion` 
+ ADD INDEX `IXFK_evaluacion_instancia` (`id_instancia` ASC)
+;
+
 ALTER TABLE `inscripcion` 
  ADD CONSTRAINT `Unique` UNIQUE (`id_alumno` ASC, `id_aula_materia` ASC)
 ;
@@ -247,6 +251,11 @@ ALTER TABLE `aulas_materias`
 ALTER TABLE `evaluacion` 
  ADD CONSTRAINT `FK_evaluacion_materia`
 	FOREIGN KEY (`id_materia`) REFERENCES `materia` (`id_materia`) ON DELETE Restrict ON UPDATE Restrict
+;
+
+ALTER TABLE `evaluacion` 
+ ADD CONSTRAINT `FK_evaluacion_instancia`
+	FOREIGN KEY (`id_instancia`) REFERENCES `instancia_evaluacion` (`id_instancia`) ON DELETE Restrict ON UPDATE Restrict
 ;
 
 ALTER TABLE `inscripcion` 
