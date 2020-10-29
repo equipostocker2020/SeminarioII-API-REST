@@ -281,4 +281,10 @@ ALTER TABLE `nota_alumno`
 SET FOREIGN_KEY_CHECKS=1 
 ;
 
+INSERT INTO `instancia_evaluacion` (`id_instancia`, `nombre_instancia`, `estado`) VALUES
+(1, 'Primer Parcial', 'ACTIVO'),
+(2, 'Segundo Parcial', 'ACTIVO'),
+(3, 'Recuperatorio', 'ACTIVO'),
+(4, 'Final', 'ACTIVO');
+
  Commit;

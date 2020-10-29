@@ -5,8 +5,8 @@ var mdAutenticacion = require("../middlewares/autentication");
 
 const SELECT_ALUMNO = 'SELECT * FROM `usuario` WHERE usuario.rol = "estudiante"';
 const SELECT_DOCENTE = 'SELECT * FROM `usuario` WHERE usuario.rol = "docente"';
-const SELECT_INSCRIPCIONES = 'SELECT A.id_usuario, A.nombre, A.apellido, B.nombre_materia, B.dia, B.horario, C.anho, D.id_inscripcion, E.nombre_aula from usuario as A  inner join materia as B  inner join aulas_materias as C on C.id_materia = B.id_materia inner join inscripcion as D on D.id_alumno = A.id_usuario and D.id_aula_materia = C.id_rel inner join aula as E on E.id_aula = C.Id_aula where A.rol = "ESTUDIANTE" and A.id_usuario = "'
-const SELECT_ASIGNACIONES_DOCENTE = 'Select A.nombre, A.apellido, B.nombre_materia, B.dia, B.horario, C.anho, E.nombre_aula from usuario as A inner join materia as B inner join aulas_materias as C on C.id_materia = B.id_materia inner join aula as E on E.id_aula = C.Id_aula where A.rol = "DOCENTE" and A.id_usuario = "'
+const SELECT_INSCRIPCIONES = 'SELECT A.id_usuario, A.nombre, A.apellido, B.nombre_materia, B.dia, B.horario, C.anho, C.id_rel, D.id_inscripcion, E.nombre_aula from usuario as A inner join materia as B inner join aulas_materias as C on C.id_materia = B.id_materia inner join inscripcion as D on D.id_alumno = A.id_usuario and D.id_aula_materia = C.id_rel inner join aula as E on E.id_aula = C.Id_aula where A.rol = "ESTUDIANTE" and A.id_usuario = "'
+const SELECT_ASIGNACIONES_DOCENTE = 'Select A.nombre, A.apellido, B.nombre_materia, B.dia, B.horario, C.anho, C.id_rel, E.nombre_aula from usuario as A inner join materia as B inner join aulas_materias as C on C.id_materia = B.id_materia inner join aula as E on E.id_aula = C.Id_aula where A.rol = "DOCENTE" and A.id_usuario = "'
 
 router.get("/alumno", mdAutenticacion.verificaToken, (req, res) => {
     var sql = SELECT_ALUMNO;
