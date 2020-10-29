@@ -9,6 +9,7 @@ const INSERT = 'INSERT INTO `evaluacion` SET ?';
 const DELETE = 'DELETE FROM `evaluacion` WHERE id_evaluacion= ?';
 const UPDATE = 'UPDATE `evaluacion` SET ? WHERE id_evaluacion = "';
 const SELECT_BY_ID = 'SELECT * FROM `usuario` WHERE id_usuario = "';
+const SELECT_EVALUACIONES_DOCENTE = 'Select A.id_evaluacion, B.id_materia, B.nombre_materia,A.fecha, C.id_rel, C.anho, D.id_usuario, D.nombre, D.apellido from evaluacion as A inner join materia as B on B.id_materia = A.id_materia inner join aulas_materias as C on C.id_materia = B.id_materia inner join usuario as D on D.id_usuario = C.id_docente where D.rol = "DOCENTE" and D.id_usuario = "'
 // reglas de negocio : Admin y docente crea actualiza y borrra
 
 
@@ -31,6 +32,26 @@ router.get("/", mdAutenticacion.verificaToken, (req, res) => {
 router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var sql = SELECT_EVALUACION_BY_ID + id + '"';
+
+    mysqlConnection.query(sql, [id], (err, rows) => {
+        if (!err)
+            if (rows == 0) {
+                res.status(400).json({
+                    ok: false,
+                    error: 'No existen registros para este ID: ' + id
+                });
+            } else {
+                res.status(200).json({
+                    ok: true,
+                    aula: rows
+                });
+            }
+    });
+});
+
+router.get('/docente/:id', mdAutenticacion.verificaToken, (req, res) => {
+    var id = req.params.id;
+    var sql = SELECT_EVALUACIONES_DOCENTE + id + '"';
 
     mysqlConnection.query(sql, [id], (err, rows) => {
         if (!err)
