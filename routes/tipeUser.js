@@ -105,9 +105,10 @@ router.get('/docente/aulas_materias/:id', mdAutenticacion.verificaToken, (req, r
 router.get('/notasxalumno/:id_rel', mdAutenticacion.verificaToken, (req, res) => {
     console.log("Adentro");
     var id_rel = req.params.id_rel;
-    //var id_docente = req.params.id_docente;
-    var sql = SELECT_BY_ID_AULA_MATERIA + id_rel + '"';
-
+    var id_docente = req.query.id_docente;
+    console.log(id_docente);
+    var sql = SELECT_BY_ID_AULA_MATERIA + id_rel + '"' + " and B.id_docente = " + '"' + id_docente + '"';
+    console.log(sql)
     mysqlConnection.query(sql, [id_rel],(err, rows) => {
         if (err) {
             res.status(500).json({
