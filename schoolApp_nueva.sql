@@ -41,6 +41,8 @@ CREATE TABLE `aula`
 	`id_aula` INT(11) NOT NULL,
 	`nombre_aula` VARCHAR(50) NOT NULL,
 	`estado` VARCHAR(10) NOT NULL DEFAULT 'ACTIVO',
+	`id_secuser` INT(11) NULL,
+	`dt_last_update` DATETIME NULL,
 	CONSTRAINT `PK_Aula` PRIMARY KEY (`id_aula` ASC)
 )
 
@@ -54,6 +56,8 @@ CREATE TABLE `aulas_materias`
 	`id_rel` INT(11) NOT NULL,
 	`id_docente` INT(11) NULL,
 	`estado` VARCHAR(10) NOT NULL DEFAULT 'ACTIVO',
+	`id_secuser` INT(11) NULL,
+	`dt_last_update` DATETIME NULL,
 	CONSTRAINT `PK_Table1` PRIMARY KEY (`id_rel` ASC)
 )
 
@@ -66,6 +70,8 @@ CREATE TABLE `evaluacion`
 	`id_instancia` INT(11) NOT NULL,
 	`fecha` DATE NOT NULL,
 	`estado` VARCHAR(10) NOT NULL DEFAULT 'ACTIVO',
+	`id_secuser` INT(11) NULL,
+	`dt_last_update` DATETIME NULL,
 	CONSTRAINT `PK_evaluacion` PRIMARY KEY (`id_evaluacion` ASC)
 )
 
@@ -77,6 +83,8 @@ CREATE TABLE `inscripcion`
 	`id_alumno` INT(11) NULL,
 	`id_aula_materia` INT(11) NULL,
 	`estado` VARCHAR(10) NOT NULL DEFAULT 'ACTIVO',
+	`id_secuser` INT(11) NULL,
+	`dt_last_update` DATETIME NULL,
 	CONSTRAINT `PK_inscripcion` PRIMARY KEY (`id_inscripcion` ASC)
 )
 
@@ -98,6 +106,8 @@ CREATE TABLE `materia` (
   `dia` varchar(10) NOT NULL,
   `horario` varchar(20) NOT NULL,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO',
+  `id_secuser` INT(11) NULL,
+  `dt_last_update` DATETIME NULL,
 	CONSTRAINT `PK_materia` PRIMARY KEY (`id_materia` ASC)
 )
 
@@ -109,6 +119,8 @@ CREATE TABLE `nota_alumno` (
   `id_instancia` int(11) DEFAULT NULL,
   `nota` varchar(50) DEFAULT NULL,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO',
+  `id_secuser` INT(11) NULL,
+  `dt_last_update` DATETIME NULL,
 	CONSTRAINT `PK_nota_alumno` PRIMARY KEY (`id_nota` ASC)
 )
 
@@ -127,6 +139,8 @@ CREATE TABLE `nota_alumno` (
   `fecha_nac` date NOT NULL,
   `edad` varchar(3) NOT NULL,
   `estado` varchar(10) NOT NULL DEFAULT 'ACTIVO',
+  `id_secuser` INT(11) NULL,
+  `dt_last_update` DATETIME NULL,
 	CONSTRAINT `PK_Usuario` PRIMARY KEY (`id_usuario` ASC)
 )
 
