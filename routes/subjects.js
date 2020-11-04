@@ -70,6 +70,7 @@ router.get('/inscriptos/:id', mdAutenticacion.verificaToken, (req, res) => {
 
 router.post("/", mdAutenticacion.verificaToken, (req, res) => {
     var idUsuario = req.query.idUsuario;
+    var date = new Date();
 
     mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', (err, rows) => {
         if (err) {
@@ -104,7 +105,9 @@ router.post("/", mdAutenticacion.verificaToken, (req, res) => {
                     var post = {
                         nombre_materia: body.nombre_materia,
                         dia: body.dia,
-                        horario: body.horario
+                        horario: body.horario,
+                        id_secuser: idUsuario,
+                        dt_last_update: date,
                     };
                     mysqlConnection.query(sql, post, (err, rows) => {
                         if (!err)
@@ -128,6 +131,8 @@ router.post("/", mdAutenticacion.verificaToken, (req, res) => {
 
 router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var idUsuario = req.query.idUsuario;
+    var date = new Date();
+
     mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', (err, rows) => {
         if (err) {
             return res.status(500).json({
@@ -164,6 +169,8 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
                         dia: body.dia,
                         horario: body.horario,
                         estado: body.estado,
+                        id_secuser: idUsuario,
+                        dt_last_update: date,
                     };
 
                     mysqlConnection.query(sql, post, (err, rows) => {

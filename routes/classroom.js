@@ -52,6 +52,7 @@ router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
 router.post("/", mdAutenticacion.verificaToken, (req, res) => {
     //enviando id por params 
     var idUsuario = req.query.idUsuario;
+    var date = new Date();
     // con el id enviado traigo el registro desde la bd.
     mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', (err, rows) => {
         if (err) {
@@ -88,6 +89,8 @@ router.post("/", mdAutenticacion.verificaToken, (req, res) => {
                     var sql = INSERT_AULA;
                     var post = {
                         nombre_aula: body.nombre_aula,
+                        id_secuser: idUsuario,
+                        dt_last_update: date,
                     };
                     mysqlConnection.query(sql, post, (err, rows) => {
                         if (!err)
@@ -110,7 +113,8 @@ router.post("/", mdAutenticacion.verificaToken, (req, res) => {
 
 router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var idUsuario = req.query.idUsuario;
-
+    var date = new Date();
+    
     mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', (err, rows) => {
         if (err) {
             return res.status(500).json({
@@ -145,6 +149,8 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
                     var post = {
                         nombre_aula: body.nombre_aula,
                         estado: body.estado,
+                        id_secuser: idUsuario,
+                        dt_last_update: date,
                     };
 
                     mysqlConnection.query(sql, post, (err, rows) => {

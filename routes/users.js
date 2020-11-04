@@ -47,6 +47,7 @@ router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
 });
 
 router.post('/', (req, res) => {
+    var date = new Date();
 
     mysqlConnection.query(SELECT, (err, rows) => {
         if (!err) {
@@ -64,6 +65,8 @@ router.post('/', (req, res) => {
                     rol: 'ADMIN',
                     fecha_nac: body.fecha_nac,
                     edad: body.edad,
+                    //id_secuser: body.id,
+                    dt_last_update: date,
                 };
             } else {
                 var post = {
@@ -77,6 +80,8 @@ router.post('/', (req, res) => {
                     rol: body.rol,
                     fecha_nac: body.fecha_nac,
                     edad: body.edad,
+                    //id_secuser: body.id,
+                    dt_last_update: date,
                 };
             };
 
@@ -121,6 +126,7 @@ router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
 router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var body = req.body;
+    var date = new Date();
     var sql = UPDATE + id + '"';
     var post = {
         nombre: body.nombre,
@@ -134,6 +140,8 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
         fecha_nac: body.fecha_nac,
         edad: body.edad,
         estado: body.estado,
+        //id_secuser: id,
+        dt_last_update: date,
     };
 
     mysqlConnection.query(sql, post, (err, rows) => {

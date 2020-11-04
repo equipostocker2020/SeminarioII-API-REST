@@ -49,6 +49,7 @@ router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
 
 router.post("/", mdAutenticacion.verificaToken, (req, res) => {
     var idUsuario = req.query.idUsuario;
+    var date = new Date();
 
     mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', (err, rows) => {
         if (err) {
@@ -85,6 +86,8 @@ router.post("/", mdAutenticacion.verificaToken, (req, res) => {
                         id_materia: body.id_materia,
                         anho: body.anho,
                         id_docente: body.id_docente,
+                        id_secuser: idUsuario,
+                        dt_last_update: date,
                     };
 
                     mysqlConnection.query(sql, post, (err, rows) => {
@@ -108,6 +111,7 @@ router.post("/", mdAutenticacion.verificaToken, (req, res) => {
 
 router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var idUsuario = req.query.idUsuario;
+    var date = new Date();
 
     mysqlConnection.query(SELECT_BY_ID + idUsuario + '"', (err, rows) => {
         if (err) {
@@ -146,6 +150,8 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
                         anho: body.anho,
                         id_docente: body.id_docente,
                         estado: body.estado,
+                        id_secuser: idUsuario,
+                        dt_last_update: date,
                     };
 
                     mysqlConnection.query(sql, post, (err, rows) => {
