@@ -12,6 +12,12 @@ const UPDATE = 'UPDATE `usuario` SET ? WHERE id_usuario = "';
 
 router.get('/', (req, res) => {
     mysqlConnection.query(SELECT, (err, rows) => {
+        if (err) {
+            res.status(500).json({
+                ok: false,
+                error: err
+            });
+        }
         if (!err) {
             res.status(200).json({
                 ok: true,
@@ -31,6 +37,12 @@ router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
     var sql = SELECT_BY_ID + id + '"';
 
     mysqlConnection.query(sql, [id], (err, rows) => {
+        if (err) {
+            res.status(500).json({
+                ok: false,
+                error: err
+            });
+        }
         if (!err)
             if (rows == 0) {
                 res.status(400).json({
@@ -50,6 +62,12 @@ router.post('/', (req, res) => {
     var date = new Date();
 
     mysqlConnection.query(SELECT, (err, rows) => {
+        if (err) {
+            res.status(500).json({
+                ok: false,
+                error: err
+            });
+        }
         if (!err) {
             var body = req.body;
             var sql = INSERT;
@@ -86,6 +104,12 @@ router.post('/', (req, res) => {
             };
 
             mysqlConnection.query(sql, post, (err, rows) => {
+                if (err) {
+                    res.status(500).json({
+                        ok: false,
+                        error: err
+                    });
+                }
                 if (!err)
                     res.status(201).json({
                         ok: true,
@@ -108,6 +132,12 @@ router.delete("/:id", mdAutenticacion.verificaToken, (req, res) => {
     var sql = DELETE;
 
     mysqlConnection.query(sql, [id], (err, rows) => {
+        if (err) {
+            res.status(500).json({
+                ok: false,
+                error: err
+            });
+        }
         if (!err)
             if (rows.affectedRows == 0) {
                 res.status(400).json({
@@ -145,6 +175,12 @@ router.put("/:id", mdAutenticacion.verificaToken, (req, res) => {
     };
 
     mysqlConnection.query(sql, post, (err, rows) => {
+        if (err) {
+            res.status(500).json({
+                ok: false,
+                error: err
+            });
+        }
         if (!err)
             res.status(200).json({
                 ok: true,

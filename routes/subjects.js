@@ -14,6 +14,12 @@ const SELECT_INSCRIPTOS = 'select c.nombre,c.apellido,c.dni,c.email,d.nombre_mat
 router.get("/", mdAutenticacion.verificaToken, (req, res) => {
     var sql = SELECT;
     mysqlConnection.query(sql, (err, rows) => {
+        if (err) {
+            res.status(500).json({
+                ok: false,
+                error: err
+            });
+        }
         if (!err) {
             res.status(200).json({
                 ok: true,
@@ -33,6 +39,12 @@ router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
     var sql = SELECT_MATERIA_BY_ID + id + '"';
 
     mysqlConnection.query(sql, [id], (err, rows) => {
+        if (err) {
+            res.status(500).json({
+                ok: false,
+                error: err
+            });
+        }
         if (!err)
             if (rows == 0) {
                 res.status(400).json({
@@ -53,6 +65,12 @@ router.get('/inscriptos/:id', mdAutenticacion.verificaToken, (req, res) => {
     var sql = SELECT_INSCRIPTOS + id + '"';
 
     mysqlConnection.query(sql, [id], (err, rows) => {
+        if (err) {
+            res.status(500).json({
+                ok: false,
+                error: err
+            });
+        }
         if (!err)
             if (rows == 0) {
                 res.status(400).json({

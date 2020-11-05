@@ -16,6 +16,12 @@ router.get("/alumno", mdAutenticacion.verificaToken, (req, res) => {
     var sql = SELECT_ALUMNO;
 
     mysqlConnection.query(sql, (err, rows) => {
+        if (err) {
+            res.status(500).json({
+                ok: false,
+                error: err
+            });
+        }
         if (!err)
             if (rows == 0) {
                 res.status(400).json({
@@ -64,6 +70,12 @@ router.get("/docente", mdAutenticacion.verificaToken, (req, res) => {
     var sql = SELECT_DOCENTE;
 
     mysqlConnection.query(sql, (err, rows) => {
+        if (err) {
+            res.status(500).json({
+                ok: false,
+                error: err
+            });
+        }
         if (!err)
             if (rows == 0) {
                 res.status(400).json({
@@ -84,9 +96,7 @@ router.get("/docente/:id", mdAutenticacion.verificaToken, (req, res) => {
     var sql = SELECT_DOCENTE_ID + id + '"';
 
     mysqlConnection.query(sql, [id], (err, rows) => {
-        // se puede cambiar la logica en principio si validas si hay un err podes decir else y mostrar el otro error
-        // o viceverza. Asi evitas un IF pero es lo mismo, preguntas si hay error si es true lo devolves y si no
-        //sigue validando .
+
         if (err) {
             res.status(500).json({
                 ok: false,

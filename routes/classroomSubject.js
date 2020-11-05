@@ -13,6 +13,12 @@ const SELECT_BY_ID = 'SELECT * FROM `usuario` WHERE id_usuario = "';
 
 router.get("/", mdAutenticacion.verificaToken, (req, res) => {
     mysqlConnection.query(SELECT, (err, rows) => {
+        if (err) {
+            res.status(500).json({
+                ok: false,
+                error: err
+            });
+        }
         if (!err) {
             res.status(200).json({
                 ok: true,
@@ -32,6 +38,12 @@ router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
     var sql = SELECT_AULA_MATERIA_BY_ID + id + '"';
 
     mysqlConnection.query(sql, [id], (err, rows) => {
+        if (err) {
+            res.status(500).json({
+                ok: false,
+                error: err
+            });
+        }
         if (!err)
             if (rows == 0) {
                 res.status(400).json({
