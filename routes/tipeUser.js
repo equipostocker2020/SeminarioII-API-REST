@@ -208,7 +208,7 @@ router.get('/alumno/misnotas/:id', mdAutenticacion.verificaToken, (req, res) => 
                 error: err
             });
         }
-        if (!err)
+
             if (rows == 0) {
                 res.status(400).json({
                     ok: false,
@@ -235,7 +235,6 @@ router.get('/docente/notasxalumno/:id_alumno', mdAutenticacion.verificaToken, (r
                 error: err
             });
         }
-        if (!err)
             if (rows == 0) {
                 res.status(400).json({
                     ok: false,
