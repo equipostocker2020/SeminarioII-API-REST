@@ -12,6 +12,7 @@ const SELECT_MIS_NOTAS = 'SELECT a.id_nota,a.nota, b.id_instancia, b.nombre_inst
 const SELECT_DOCENTE_NOTASXALUMNO = 'SELECT a.id_nota,a.nota, b.id_instancia, b.nombre_instancia, c.id_inscripcion, c.id_alumno, d.id_usuario,e.id_rel, c.id_aula_materia, f.id_materia,f.nombre_materia,e.id_docente from nota_alumno as a inner join instancia_evaluacion as b on b.id_instancia = a.id_instancia inner join inscripcion as c on c.id_inscripcion = a.id_inscripcion inner join usuario as d on d.id_usuario = c.id_alumno inner join aulas_materias as e on e.id_rel = c.id_aula_materia inner join materia as f on f.id_materia = e.id_materia inner join usuario as g on g.id_usuario = e.id_docente WHERE c.id_alumno = "';
 const SELECT_DOCENTE_ID = 'SELECT * from `usuario` WHERE rol = "DOCENTE" AND id_usuario = "';
 const SELECT_ALUMNOS_ID = 'SELECT * from `usuario` WHERE rol = "ESTUDIANTE" AND id_usuario = "';
+const SELECT_MIS_NOTAS_ALUMNO = 'SELECT a.id_nota,a.nota, b.id_instancia, b.nombre_instancia, c.id_inscripcion, c.id_alumno, d.id_usuario,e.id_rel,f.id_materia,f.nombre_materia from nota_alumno as a inner join instancia_evaluacion as b on b.id_instancia = a.id_instancia inner join inscripcion as c on c.id_inscripcion = a.id_inscripcion inner join usuario as d on d.id_usuario = c.id_alumno inner join aulas_materias as e on e.id_rel = c.id_aula_materia inner join materia as f on f.id_materia = e.id_materia WHERE c.id_inscripcion = "';
 
 router.get("/alumno", mdAutenticacion.verificaToken, (req, res) => {
     var sql = SELECT_ALUMNO;
@@ -244,6 +245,32 @@ router.get('/docente/notasxalumno/:id_alumno', mdAutenticacion.verificaToken, (r
                 res.status(200).json({
                     ok: true,
                     inscripciones: rows
+                });
+            }
+    });
+});
+
+router.get('/alumno/misnotasalumno/:id_inscripcion', mdAutenticacion.verificaToken, (req, res) => {
+    var id_inscripcion = req.params.id_inscripcion;
+    var sql = SELECT_MIS_NOTAS_ALUMNO + id_inscripcion + '"';
+
+    mysqlConnection.query(sql, [id_inscripcion], (err, rows) => {
+        if (err) {
+            res.status(500).json({
+                ok: false,
+                error: err
+            });
+        }
+
+            if (rows == 0) {
+                res.status(400).json({
+                    ok: false,
+                    error: 'No existen registros para este ID: ' + id_inscripcion
+                });
+            } else {
+                res.status(200).json({
+                    ok: true,
+                    misnotasalumno: rows
                 });
             }
     });
