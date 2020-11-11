@@ -301,4 +301,37 @@ INSERT INTO `instancia_evaluacion` (`id_instancia`, `nombre_instancia`, `estado`
 (3, 'Recuperatorio', 'ACTIVO'),
 (4, 'Final', 'ACTIVO');
 
+INSERT INTO `aula`(`nombre_aula`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Aula 1','ACTIVO','1',SYSDATE());
+INSERT INTO `aula`(`nombre_aula`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Aula 2','ACTIVO','1',SYSDATE());
+INSERT INTO `aula`(`nombre_aula`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Aula 3','ACTIVO','1',SYSDATE());
+INSERT INTO `aula`(`nombre_aula`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Aula 4','ACTIVO','1',SYSDATE());
+INSERT INTO `aula`(`nombre_aula`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Aula 5','ACTIVO','1',SYSDATE());
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Materia 1','Lunes','18:30','ACTIVO','1',sysdate());
+INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Materia 2','Martes','18:30','ACTIVO','1',sysdate());
+INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Materia 3','Miercoles','18:30','ACTIVO','1',sysdate());
+INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Materia 4','Jueves','18:30','ACTIVO','1',sysdate());
+INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Materia 5','Viernes','18:30','ACTIVO','1',sysdate());
+INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Materia 6','Lunes','20:30','ACTIVO','1',sysdate());
+INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Materia 7','Martes','20:30','ACTIVO','1',sysdate());
+INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Materia 8','Miercoles','20:30','ACTIVO','1',sysdate());
+INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Materia 9','Jueves','20:30','ACTIVO','1',sysdate());
+INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Materia 10','Viernes','20:30','ACTIVO','1',sysdate());
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+INSERT INTO `usuario`(`nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('admin','admin','direccion admin 234','admin@admin.com','11222333','$2a$10$sT3IZvFLmODfSX82msbHb./lE3OU0.HhiARJ.iuMFfEtKmoQigAim','20112223337','ADMIN','1985/12/01','34','ACTIVO','1',sysdate());
+INSERT INTO `usuario`(`nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Alumno','Uno','direccion Alumno 1','alumno@uno.com','22111333','$2a$10$sT3IZvFLmODfSX82msbHb./lE3OU0.HhiARJ.iuMFfEtKmoQigAim','20221113337','ESTUDIANTE','1995/06/10','25','ACTIVO','1',sysdate());
+INSERT INTO `usuario`(`nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Alumno','Dos','direccion Alumno 2','alumno@dos.com','33111444','$2a$10$sT3IZvFLmODfSX82msbHb./lE3OU0.HhiARJ.iuMFfEtKmoQigAim','20331114447','ESTUDIANTE','2000/03/23','20','ACTIVO','1',sysdate());
+INSERT INTO `usuario`(`nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Alumno','Tres','direccion Alumno 3','alumno@tres.com','22555444','$2a$10$sT3IZvFLmODfSX82msbHb./lE3OU0.HhiARJ.iuMFfEtKmoQigAim','20225554447','ESTUDIANTE','1990/09/01','30','ACTIVO','1',sysdate());
+INSERT INTO `usuario`(`nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Alumno','Cuatro','direccion Alumno 4','alumno@cuatro.com','33111222','$2a$10$sT3IZvFLmODfSX82msbHb./lE3OU0.HhiARJ.iuMFfEtKmoQigAim','20331112227','ESTUDIANTE','1999/08/21','21','ACTIVO','1',sysdate());
+
+INSERT INTO `usuario`(`nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Docente','Uno','direccion Docente 1','docente@uno.com','44555666','$2a$10$sT3IZvFLmODfSX82msbHb./lE3OU0.HhiARJ.iuMFfEtKmoQigAim','20445556667','DOCENTE','1959/10/01','61','ACTIVO','1',sysdate());
+INSERT INTO `usuario`(`nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Docente','Dos','direccion Docente 2','docente@dos.com','55444666','$2a$10$sT3IZvFLmODfSX82msbHb./lE3OU0.HhiARJ.iuMFfEtKmoQigAim','20554446667','DOCENTE','1965/08/03','55','ACTIVO','1',sysdate());
+INSERT INTO `usuario`(`nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Docente','Tres','direccion Docente 3','docente@tres.com','66555444','$2a$10$sT3IZvFLmODfSX82msbHb./lE3OU0.HhiARJ.iuMFfEtKmoQigAim','20665554447','DOCENTE','1980/02/15','40','ACTIVO','1',sysdate());
+INSERT INTO `usuario`(`nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Docente','Cuatro','direccion Docente 4','docente@cuatro.com','77444111','$2a$10$sT3IZvFLmODfSX82msbHb./lE3OU0.HhiARJ.iuMFfEtKmoQigAim','20774441117','DOCENTE','1979/10/25','41','ACTIVO','1',sysdate());
+INSERT INTO `usuario`(`nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Docente','Cinco','direccion Docente 5','docente@cinco.com','11555999','$2a$10$sT3IZvFLmODfSX82msbHb./lE3OU0.HhiARJ.iuMFfEtKmoQigAim','20115559997','DOCENTE','1982/11/05','38','ACTIVO','1',sysdate());
+
  Commit;
