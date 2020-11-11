@@ -307,8 +307,6 @@ INSERT INTO `aula`(`nombre_aula`, `estado`, `id_secuser`, `dt_last_update`) VALU
 INSERT INTO `aula`(`nombre_aula`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Aula 4','ACTIVO','1',SYSDATE());
 INSERT INTO `aula`(`nombre_aula`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Aula 5','ACTIVO','1',SYSDATE());
 
---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Materia 1','Lunes','18:30','ACTIVO','1',sysdate());
 INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Materia 2','Martes','18:30','ACTIVO','1',sysdate());
 INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Materia 3','Miercoles','18:30','ACTIVO','1',sysdate());
@@ -319,8 +317,6 @@ INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`
 INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Materia 8','Miercoles','20:30','ACTIVO','1',sysdate());
 INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Materia 9','Jueves','20:30','ACTIVO','1',sysdate());
 INSERT INTO `materia`(`nombre_materia`, `dia`, `horario`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Materia 10','Viernes','20:30','ACTIVO','1',sysdate());
-
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 INSERT INTO `usuario`(`nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('admin','admin','direccion admin 234','admin@admin.com','11222333','$2a$10$sT3IZvFLmODfSX82msbHb./lE3OU0.HhiARJ.iuMFfEtKmoQigAim','20112223337','ADMIN','1985/12/01','34','ACTIVO','1',sysdate());
 INSERT INTO `usuario`(`nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Alumno','Uno','direccion Alumno 1','alumno@uno.com','22111333','$2a$10$sT3IZvFLmODfSX82msbHb./lE3OU0.HhiARJ.iuMFfEtKmoQigAim','20221113337','ESTUDIANTE','1995/06/10','25','ACTIVO','1',sysdate());
