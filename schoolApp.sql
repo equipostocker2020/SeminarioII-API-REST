@@ -330,4 +330,4 @@ INSERT INTO `usuario`(`nombre`, `apellido`, `direccion`, `email`, `dni`, `contra
 INSERT INTO `usuario`(`nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Docente','Cuatro','direccion Docente 4','docente@cuatro.com','77444111','$2a$10$sT3IZvFLmODfSX82msbHb./lE3OU0.HhiARJ.iuMFfEtKmoQigAim','20774441117','DOCENTE','1979/10/25','41','ACTIVO','1',sysdate());
 INSERT INTO `usuario`(`nombre`, `apellido`, `direccion`, `email`, `dni`, `contraseña`, `cuit_cuil`, `rol`, `fecha_nac`, `edad`, `estado`, `id_secuser`, `dt_last_update`) VALUES ('Docente','Cinco','direccion Docente 5','docente@cinco.com','11555999','$2a$10$sT3IZvFLmODfSX82msbHb./lE3OU0.HhiARJ.iuMFfEtKmoQigAim','20115559997','DOCENTE','1982/11/05','38','ACTIVO','1',sysdate());
 
- Commit;
+Commit;
