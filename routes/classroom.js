@@ -35,6 +35,8 @@ router.get("/", mdAutenticacion.verificaToken, (req, res) => {
     });
 });
 
+//prueba
+
 router.get('/:id', mdAutenticacion.verificaToken, (req, res) => {
     var id = req.params.id;
     var sql = SELECT_AULA_BY_ID + id + '"';
